@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'Cocogoose Classic';
+    src: url('fonts/CocogooseClassic-Regular.woff2') format('woff2'),
+    url('fonts/CocogooseClassic-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cocogoose Classic';
+    src: url('fonts/CocogooseClassic-Light.woff2') format('woff2'),
+    url('fonts/CocogooseClassic-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cocogoose Classic';
+    src: url('fonts/CocogooseClassic-Bold.woff2') format('woff2'),
+    url('fonts/CocogooseClassic-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+html, body {
+    font-family: "Open Sans", sans-serif;
+}
+
+/* Prevent scrolling when modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Smooth transitions for blur effects */
+header, main {
+    transition: filter 0.3s ease;
+}
+
+section {
+    @apply relative px-6 py-40;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Cocogoose Classic", sans-serif;
+}
+
+.coco {
+    font-family: "Cocogoose Classic", sans-serif;
+}
+
+.card {
+    @apply relative flex flex-col gap-8 break-inside-avoid mb-8 pb-8;
+}
+
+.card:nth-child(4) {
+    @apply pt-56;
+}
+
+.card img {
+    @apply w-full h-auto object-cover rounded-2xl;
+}
+
+.card ul {
+    @apply list-none space-y-3 bg-slate-50 rounded-2xl p-4 border border-slate-100;
+}
+
+.card ul li {
+    @apply relative pl-7 text-slate-700 leading-relaxed font-medium text-sm;
+}
+
+.card ul li::before {
+    content: "✓";
+    @apply absolute left-0 top-0.5 w-5 h-5 text-xs font-bold flex items-center justify-center;
+    font-size: 11px;
+    line-height: 1;
+}
+
+.masonry-container {
+    column-count: 1;
+    column-gap: 2rem;
+    column-fill: balance;
+}
+
+@media (min-width: 768px) {
+    .masonry-container {
+        column-count: 2;
+    }
+}
+
+/* Accordion Styles */
+.accordion {
+    @apply space-y-2;
+}
+
+.accordion-item {
+    @apply overflow-hidden;
+}
+
+.accordion-header {
+    @apply w-full flex items-center justify-between py-4 text-left bg-transparent cursor-pointer  border-b border-gray-600;
+    font-family: "Cocogoose Classic", sans-serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.accordion-icon {
+    @apply text-xl font-bold transition-transform duration-200 ease-in-out;
+    min-width: 24px;
+    text-align: center;
+}
+
+.accordion-content {
+    @apply overflow-hidden transition-all duration-300 ease-in-out;
+    max-height: 0;
+}
+
+.accordion-content p {
+    @apply pt-4;
+}
+
+.accordion-content.is-open {
+    max-height: 500px;
+}
+
+.accordion-content-inner {
+    @apply py-4 pt-0 space-y-4;
+}
+
+.accordion-content h4 {
+    @apply text-sm font-semibold text-gray-200 mb-3;
+    font-family: "Cocogoose Classic", sans-serif;
+}
+
+.accordion-content p {
+    @apply text-gray-300 leading-relaxed;
+}
+
+.accordion-content ul {
+    @apply list-none space-y-2 bg-gray-800 rounded-lg p-4 border border-gray-700;
+}
+
+.accordion-content ul li {
+    @apply relative pl-6 text-gray-300 leading-relaxed text-sm;
+}
+
+.accordion-content ul li::before {
+    content: "✓";
+    @apply absolute left-0 top-0.5 w-5 h-5 text-xs font-bold flex items-center justify-center text-green-400;
+    font-size: 11px;
+    line-height: 1;
+}
+
+.projects-section {
+    @apply relative px-6 py-40 bg-zinc-800 text-neutral-50;
+}
+
+footer {
+    @apply bg-gray-800 text-white py-16;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .accordion-header {
+        @apply p-3 text-base;
+    }
+
+    .accordion-content-inner {
+        @apply p-3 pt-0;
+    }
+
+    .accordion-content.is-open {
+        max-height: 600px;
+    }
+}
