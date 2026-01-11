@@ -51,13 +51,13 @@ const projects: Project[] = [
 </script>
 
 <template>
-  <section class="projects-section dark-section">
+  <section class="projects-section dark-section bg-zinc-800 dark:bg-zinc-900">
     <div class="flex flex-col gap-24 max-w-6xl mx-auto">
       <div class="flex flex-col gap-4">
-        <h2 class="text-2xl max-w-6xl coco">
+        <h2 class="text-2xl max-w-6xl coco text-white">
           Recent Projects
         </h2>
-        <p class="text-xl font-light max-w-4xl">
+        <p class="text-xl font-light text-gray-100 dark:text-gray-200 max-w-4xl">
           A selection of recent work across hospitality, events, and experience-driven businesses.
           Each project solved real operational challenges while delivering better user experiences.
         </p>
@@ -69,23 +69,23 @@ const projects: Project[] = [
           :key="project.id"
           class="card !pt-0"
         >
-          <img :src="project.image" :alt="project.title">
+          <img :src="project.image" :alt="project.title" loading="lazy" decoding="async">
           <div class="flex flex-col gap-2">
             <div class="flex items-center gap-4">
-              <h3 class="text-xl text-shadow-slate-900 coco">
+              <h3 class="text-xl text-shadow-slate-900 dark:text-shadow-slate-100 coco text-white">
                 {{ project.title }}
               </h3>
             </div>
-            <div class="text-sm font-light text-neutral-50">
+            <div class="text-sm font-light text-neutral-50 dark:text-neutral-200">
               {{ project.client }}
             </div>
-            <p class="block  leading-normal font-light">
+            <p class="block leading-normal font-light text-gray-100 dark:text-gray-200">
               {{ project.description }}
             </p>
           </div>
 
-          <ul class="!bg-neutral-900 !border-neutral-900 ">
-            <li class="!text-neutral-50" v-for="tag in project.tags" :key="tag">{{ tag }}</li>
+          <ul class="!bg-neutral-900 dark:!bg-neutral-800 !border-neutral-900 dark:!border-neutral-700">
+            <li class="!text-neutral-50 dark:!text-neutral-100" v-for="tag in project.tags" :key="tag">{{ tag }}</li>
           </ul>
         </div>
       </div>

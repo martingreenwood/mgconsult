@@ -111,9 +111,22 @@ const textColor = computed(() => props.logoColor)
   background-position: center;
 }
 
+/* Dark mode styles */
+:global(.dark) .central-image {
+  background: #1a1a1a;
+  border-color: #3a3a3a;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="%23f5f5f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 9h8M8 13h6" stroke="%23f5f5f5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+}
+
 .floating-contact-button:hover .central-image {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   border-color: #e2e8f0;
+}
+
+:global(.dark) .floating-contact-button:hover .central-image {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  border-color: #2a2a2a;
 }
 
 @keyframes rotate {

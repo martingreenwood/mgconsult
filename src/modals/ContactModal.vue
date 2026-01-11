@@ -1,64 +1,87 @@
 <template>
   <!-- Sidebar Modal Overlay -->
   <Transition :name="`sidebar-${side}`">
-    <div v-if="visible" class="fixed inset-0 z-50 flex items-stretch" :class="side === 'right' ? 'justify-end' : 'justify-start'">
+    <div
+      v-if="visible"
+      ref="modalRef"
+      class="fixed inset-0 z-50 flex items-stretch"
+      :class="side === 'right' ? 'justify-end' : 'justify-start'"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
       <!-- Background Blur -->
       <div
         class="absolute inset-0 bg-black/40 backdrop-blur-lg"
         @click="close"
+        aria-hidden="true"
       ></div>
 
       <!-- Sidebar Content -->
       <div class="relative w-full sm:max-w-lg h-screen z-10 flex flex-col">
-        <div class="sidebar-panel bg-white h-full shadow-2xl flex flex-col overflow-y-auto">
+        <div class="sidebar-panel bg-white dark:bg-dark-surface h-full shadow-2xl flex flex-col overflow-y-auto">
           <!-- Close Button -->
           <button
-            class="absolute top-6 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-900 transition-all duration-200 z-10"
+            ref="closeButtonRef"
+            class="absolute top-6 w-10 h-10 rounded-full bg-slate-100 dark:bg-dark-elevated hover:bg-slate-200 dark:hover:bg-dark-border flex items-center justify-center text-slate-600 dark:text-gray-200 hover:text-slate-900 dark:hover:text-white transition-all duration-200 z-10"
             :class="side === 'right' ? 'right-6' : 'left-6'"
             @click="close"
-            aria-label="Close sidebar"
+            aria-label="Close booking modal"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
 
           <!-- Content Area -->
           <div class="flex-1 px-8 py-8">
+            <h2 id="modal-title" class="sr-only">Book a Consultation Call</h2>
+
             <!-- Calendly Embed -->
             <div v-if="currentStep !== 'success'" class="space-y-4">
+              <!-- Loading State -->
+              <div v-if="calendlyLoading" class="calendly-embed-container relative h-[600px] flex items-center justify-center bg-gray-50 dark:bg-dark-elevated rounded-lg">
+                <div class="text-center">
+                  <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-slate-200 dark:border-dark-border border-t-slate-900 dark:border-t-white mb-4"></div>
+                  <p class="text-slate-600 dark:text-gray-200">Loading booking calendar...</p>
+                </div>
+              </div>
+
               <!-- Calendly Embed -->
-              <div class="calendly-embed-container">
+              <div class="calendly-embed-container" :class="{ 'hidden': calendlyLoading }">
                 <iframe
                   src="https://calendly.com/hello-martingreenwood/30min?hide_gdpr_banner=1"
                   width="100%"
                   height="600"
                   class="rounded-lg"
+                  title="Calendly booking widget"
+                  loading="lazy"
+                  @load="handleCalendlyLoad"
                 ></iframe>
               </div>
             </div>
 
             <!-- Success Step -->
-            <div v-else-if="currentStep === 'success'" class="text-center py-8">
+            <div v-else-if="currentStep === 'success'" class="text-center py-8" role="status" aria-live="polite">
               <!-- Success Icon -->
-              <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
-                <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div class="w-20 h-20 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
+                <svg class="w-10 h-10 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
 
               <!-- Success Message -->
-              <h3 class="text-2xl font-bold text-slate-900 mb-3">
+              <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">
                 Consultation Booked!
               </h3>
-              <p class="text-lg text-slate-600 mb-6">
+              <p class="text-lg text-slate-600 dark:text-gray-200 mb-6">
                 Your consultation has been successfully scheduled.
               </p>
 
               <!-- Booking Details -->
-              <div v-if="bookingResult?.event" class="bg-green-50 border border-green-200 rounded-lg p-6 mb-6 text-left max-w-md mx-auto">
-                <h4 class="font-semibold text-green-900 mb-3">Booking Details:</h4>
-                <div class="space-y-2 text-sm text-green-800">
+              <div v-if="bookingResult?.event" class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6 mb-6 text-left max-w-md mx-auto">
+                <h4 class="font-semibold text-green-900 dark:text-green-400 mb-3">Booking Details:</h4>
+                <div class="space-y-2 text-sm text-green-800 dark:text-green-300">
                   <div class="flex items-center">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -87,9 +110,9 @@
               </div>
 
               <!-- Next Steps -->
-              <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-left max-w-md mx-auto">
-                <h4 class="font-semibold text-blue-900 mb-2">What's Next?</h4>
-                <ul class="text-sm text-blue-800 space-y-1">
+              <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6 text-left max-w-md mx-auto">
+                <h4 class="font-semibold text-blue-900 dark:text-blue-400 mb-2">What's Next?</h4>
+                <ul class="text-sm text-blue-800 dark:text-blue-300 space-y-1">
                   <li class="flex flex-row items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -141,7 +164,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, onUnmounted, computed } from 'vue'
+import { ref, watch, onMounted, onUnmounted, computed, nextTick } from 'vue'
 import BaseButton from '@/components/BaseButton.vue'
 
 interface Props {
@@ -159,8 +182,9 @@ const visible = defineModel<boolean>('visible', { default: false })
 // Simple state management
 const currentStep = ref<FormStep>('booking')
 const bookingResult = ref<any>(null)
-
-
+const modalRef = ref<HTMLElement | null>(null)
+const closeButtonRef = ref<HTMLButtonElement | null>(null)
+const calendlyLoading = ref(true)
 
 const close = () => {
   visible.value = false
@@ -170,12 +194,66 @@ const close = () => {
 const resetForm = () => {
   currentStep.value = 'booking'
   bookingResult.value = null
+  calendlyLoading.value = true
 }
 
-// Handle ESC key to close modal
+// Handle iframe load
+const handleCalendlyLoad = () => {
+  calendlyLoading.value = false
+}
+
+// Focus trap: Get all focusable elements within the modal
+const getFocusableElements = (): HTMLElement[] => {
+  if (!modalRef.value) return []
+
+  const focusableSelectors = [
+    'a[href]',
+    'button:not([disabled])',
+    'textarea:not([disabled])',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])'
+  ].join(',')
+
+  return Array.from(modalRef.value.querySelectorAll(focusableSelectors))
+}
+
+// Handle Tab key for focus trap
 const handleKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Escape' && visible.value) {
     close()
+    return
+  }
+
+  // Focus trap
+  if (event.key === 'Tab' && visible.value) {
+    const focusableElements = getFocusableElements()
+    if (focusableElements.length === 0) return
+
+    const firstElement = focusableElements[0]
+    const lastElement = focusableElements[focusableElements.length - 1]
+
+    if (event.shiftKey) {
+      // Shift + Tab: moving backwards
+      if (document.activeElement === firstElement) {
+        event.preventDefault()
+        lastElement.focus()
+      }
+    } else {
+      // Tab: moving forwards
+      if (document.activeElement === lastElement) {
+        event.preventDefault()
+        firstElement.focus()
+      }
+    }
+  }
+}
+
+// Set initial focus when modal opens
+const setInitialFocus = async () => {
+  await nextTick()
+  if (closeButtonRef.value) {
+    closeButtonRef.value.focus()
   }
 }
 
@@ -215,10 +293,11 @@ const formatCalendlyTime = (timeString: string) => {
 
 
 
-// Manage body scroll when modal is open/closed
+// Manage body scroll when modal is open/closed and set focus
 watch(visible, (isVisible) => {
   if (isVisible) {
     document.body.classList.add('modal-open')
+    setInitialFocus()
   } else {
     document.body.classList.remove('modal-open')
   }

@@ -144,24 +144,24 @@ const variantClasses = computed(() => {
 
   const variants = {
     primary: [
-      'bg-neutral-950 text-neutral-50 border border-neutral-950',
-      'hover:bg-neutral-800',
-      'focus:ring-neutral-700'
+      'bg-neutral-950 dark:bg-neutral-100 text-neutral-50 dark:text-neutral-950 border border-neutral-950 dark:border-neutral-100',
+      'hover:bg-neutral-800 dark:hover:bg-neutral-200',
+      'focus:ring-neutral-700 dark:focus:ring-neutral-300'
     ],
     secondary: [
-      'bg-neutral-100 text-neutral-950 border border-neutral-100',
-      'hover:bg-neutral-200',
-      'focus:ring-neutral-300'
+      'bg-neutral-100 dark:bg-neutral-800 text-neutral-950 dark:text-neutral-50 border border-neutral-100 dark:border-neutral-800',
+      'hover:bg-neutral-200 dark:hover:bg-neutral-700',
+      'focus:ring-neutral-300 dark:focus:ring-neutral-600'
     ],
     outline: [
-      'bg-transparent text-neutral-950 border border-neutral-950',
-      'hover:text-neutral-50',
-      'focus:ring-neutral-950'
+      'bg-transparent text-neutral-950 dark:text-neutral-50 border border-neutral-950 dark:border-neutral-50',
+      'hover:text-neutral-50 dark:hover:text-neutral-950',
+      'focus:ring-neutral-950 dark:focus:ring-neutral-50'
     ],
     ghost: [
-      'bg-transparent text-neutral-950 border border-transparent',
-      'hover:bg-neutral-100',
-      'focus:ring-neutral-300'
+      'bg-transparent text-neutral-950 dark:text-neutral-50 border border-transparent',
+      'hover:bg-neutral-100 dark:hover:bg-neutral-800',
+      'focus:ring-neutral-300 dark:focus:ring-neutral-600'
     ]
   }
   return variants[props.variant]
@@ -174,10 +174,10 @@ const arrowClasses = computed(() => {
   }
 
   const arrowBgs = {
-    primary: 'bg-neutral-700',
-    secondary: 'bg-neutral-300',
-    outline: 'bg-neutral-700',
-    ghost: 'bg-neutral-200'
+    primary: 'bg-neutral-700 dark:bg-neutral-300',
+    secondary: 'bg-neutral-300 dark:bg-neutral-700',
+    outline: 'bg-neutral-700 dark:bg-neutral-300',
+    ghost: 'bg-neutral-200 dark:bg-neutral-700'
   }
 
   // Ensure the height matches the button size
@@ -193,10 +193,10 @@ const arrowIconClasses = computed(() => {
   }
 
   const iconColors = {
-    primary: 'text-neutral-50',
-    secondary: 'text-neutral-950',
-    outline: 'text-neutral-50',
-    ghost: 'text-neutral-950'
+    primary: 'text-neutral-50 dark:text-neutral-950',
+    secondary: 'text-neutral-950 dark:text-neutral-50',
+    outline: 'text-neutral-50 dark:text-neutral-950',
+    ghost: 'text-neutral-950 dark:text-neutral-50'
   }
 
   return iconColors[props.variant]

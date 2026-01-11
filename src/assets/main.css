@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+@theme {
+  /* Custom font family */
+  --font-family-cocogoose: "Cocogoose Classic", Impact, "Arial Black", sans-serif;
+
+  /* Custom dark mode colors */
+  --color-dark-bg: #0a0a0a;
+  --color-dark-surface: #1a1a1a;
+  --color-dark-elevated: #2a2a2a;
+  --color-dark-border: #3a3a3a;
+  --color-dark-text-primary: #f5f5f5;
+  --color-dark-text-secondary: #a3a3a3;
+  --color-dark-text-tertiary: #737373;
+}
+
 @font-face {
     font-family: 'Cocogoose Classic';
     src: url('fonts/CocogooseClassic-Regular.woff2') format('woff2'),
@@ -29,7 +43,8 @@
 
 
 html, body {
-    font-family: "Open Sans", sans-serif;
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    @apply bg-white dark:bg-dark-bg text-slate-900 dark:text-dark-text-primary transition-colors duration-300;
 }
 
 /* Prevent scrolling when modal is open */
@@ -42,16 +57,42 @@ header, main {
     transition: filter 0.3s ease;
 }
 
+/* Skip to content link - Accessibility */
+.skip-to-content {
+    @apply absolute left-0 top-0 bg-slate-900 text-white px-4 py-2 z-[9999] transform -translate-y-full;
+    transition: transform 0.3s ease-in-out;
+}
+
+.skip-to-content:focus {
+    @apply transform translate-y-0;
+}
+
+/* Focus visible styles for better keyboard navigation */
+*:focus-visible {
+    @apply outline-2 outline-offset-2 outline-slate-900;
+}
+
+button:focus-visible,
+a:focus-visible {
+    @apply outline-2 outline-offset-2 outline-slate-900;
+}
+
+/* Screen reader only - visually hidden but accessible */
+.sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+    clip: rect(0, 0, 0, 0);
+}
+
 section {
     @apply relative px-6 py-40;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Cocogoose Classic", sans-serif;
+    font-family: "Cocogoose Classic", Impact, "Arial Black", sans-serif;
 }
 
 .coco {
-    font-family: "Cocogoose Classic", sans-serif;
+    font-family: "Cocogoose Classic", Impact, "Arial Black", sans-serif;
 }
 
 .card {
@@ -67,16 +108,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card ul {
-    @apply list-none space-y-3 bg-slate-50 rounded-2xl p-4 border border-slate-100;
+    @apply list-none space-y-3 bg-slate-50 dark:bg-dark-elevated rounded-2xl p-4 border border-slate-100 dark:border-dark-border;
 }
 
 .card ul li {
-    @apply relative pl-7 text-slate-700 leading-relaxed font-medium text-sm;
+    @apply relative pl-7 text-slate-700 dark:text-gray-300 leading-relaxed font-medium text-sm;
 }
 
 .card ul li::before {
     content: "✓";
-    @apply absolute left-0 top-0.5 w-5 h-5 text-xs font-bold flex items-center justify-center;
+    @apply absolute left-0 top-0.5 w-5 h-5 text-xs font-bold flex items-center justify-center dark:text-green-400;
     font-size: 11px;
     line-height: 1;
 }
@@ -103,7 +144,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .accordion-header {
-    @apply w-full flex items-center justify-between py-4 text-left bg-transparent cursor-pointer  border-b border-gray-600;
+    @apply w-full flex items-center justify-between py-4 text-left bg-transparent cursor-pointer border-b border-gray-600 dark:border-gray-700;
     font-family: "Cocogoose Classic", sans-serif;
     font-size: 1.125rem;
     font-weight: 600;
@@ -133,25 +174,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .accordion-content h4 {
-    @apply text-sm font-semibold text-gray-200 mb-3;
+    @apply text-sm font-semibold text-gray-200 dark:text-gray-300 mb-3;
     font-family: "Cocogoose Classic", sans-serif;
 }
 
 .accordion-content p {
-    @apply text-gray-300 leading-relaxed;
+    @apply text-gray-300 dark:text-gray-200 leading-relaxed;
 }
 
 .accordion-content ul {
-    @apply list-none space-y-2 bg-gray-800 rounded-lg p-4 border border-gray-700;
+    @apply list-none space-y-2 bg-gray-800 dark:bg-gray-900 rounded-lg p-4 border border-gray-700 dark:border-gray-800;
 }
 
 .accordion-content ul li {
-    @apply relative pl-6 text-gray-300 leading-relaxed text-sm;
+    @apply relative pl-6 text-gray-300 dark:text-gray-200 leading-relaxed text-sm;
 }
 
 .accordion-content ul li::before {
     content: "✓";
-    @apply absolute left-0 top-0.5 w-5 h-5 text-xs font-bold flex items-center justify-center text-green-400;
+    @apply absolute left-0 top-0.5 w-5 h-5 text-xs font-bold flex items-center justify-center text-green-400 dark:text-green-500;
     font-size: 11px;
     line-height: 1;
 }
@@ -162,6 +203,51 @@ h1, h2, h3, h4, h5, h6 {
 
 footer {
     @apply bg-gray-800 text-white py-16;
+}
+
+/* Page transition animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply fade-in animation to sections */
+section {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Smooth scroll behavior */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 /* Mobile optimizations */
