@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import ContactModal from '@/modals/ContactModal.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import FloatingContactButton from '@/components/FloatingContactButton.vue'
@@ -10,10 +10,11 @@ import Testimonials from '@/components/Testimonials.vue'
 import ThemeToggle from '@/components/ThemeToggle.vue'
 import { useTheme } from '@/composables/useTheme'
 
-const { isDark } = useTheme()
+const { isDark, initTheme } = useTheme()
 
 const videoTransform = ref('translateY(0px)')
-const logoColor = ref('#000') // Default to black
+// Initialize logo color based on theme - will be updated on mount
+const logoColor = ref(isDark.value ? '#fff' : '#000')
 const showModal = ref(false)
 const showLeftModal = ref(false)
 let ticking = false
@@ -37,7 +38,7 @@ const updateLogoColor = () => {
   const scrolled = window.pageYOffset
   const headerHeight = 80 // Approximate header height
 
-  // In dark mode, most sections have dark backgrounds, so logo should be white
+  // In dark mode, all sections have dark backgrounds, so logo should be white
   if (isDark.value) {
     logoColor.value = '#fff'
     return
@@ -48,9 +49,11 @@ const updateLogoColor = () => {
     { selector: '.hero-section', color: '#000' }, // Hero section - light background - dark logo
     { selector: '.video-parallax-section', color: '#000' }, // Light background - dark logo
     { selector: '.services-section', color: '#000' }, // Light background - dark logo
+    { selector: '.testimonials-section', color: '#000' }, // Light background - dark logo
     { selector: '.cta-section', color: '#000' }, // Light background - dark logo
-    { selector: '.dark-section', color: '#fff' }, // Dark background - white logo
+    { selector: '.dark-section', color: '#fff' }, // Dark background - white logo (includes projects-section)
     { selector: '.trust-section', color: '#000' }, // Light background - dark logo
+    { selector: '.faq-section', color: '#000' }, // Light background - dark logo
     { selector: 'footer', color: '#fff' } // Dark background - white logo
   ]
 
@@ -125,7 +128,11 @@ watch(isDark, () => {
   updateLogoColor()
 })
 
-onMounted(() => {
+onMounted(async () => {
+  initTheme() // Initialize theme system
+  // Wait for theme to be applied, then set initial logo color
+  await nextTick()
+  logoColor.value = isDark.value ? '#fff' : '#000'
   window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('open-contact-modal', handleOpenContactModal)
   updateParallax() // Initial call
@@ -162,7 +169,8 @@ onUnmounted(() => {
   <!-- Main -->
   <main id="main-content" class="w-screen min-h-screen" :class="{ 'blur-sm': showModal || showLeftModal }" role="main">
 
-    <section class="hero-section max-w-6xl mx-auto min-h-screen flex flex-col gap-8 justify-end"
+    <section
+      class="hero-section bg-white dark:bg-dark-bg max-w-6xl mx-auto min-h-screen flex flex-col gap-8 justify-end"
       aria-label="Hero introduction">
       <h1
         class="text-7xl text-shadow-slate-900 dark:text-shadow-slate-100 max-w-6xl coco text-slate-900 dark:text-white">
@@ -194,7 +202,7 @@ onUnmounted(() => {
     </section>
 
     <!-- services -->
-    <section class="services-section" aria-labelledby="services-heading">
+    <section class="services-section bg-white dark:bg-dark-bg" aria-labelledby="services-heading">
       <div class="flex flex-col gap-24 max-w-6xl mx-auto">
         <h2 id="services-heading" class="sr-only">Services I Provide</h2>
         <p class="text-xl font-light text-gray-600 dark:text-gray-200 max-w-2xl">
