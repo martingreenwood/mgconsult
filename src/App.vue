@@ -521,5 +521,5 @@ onUnmounted(() => {
 
   <!-- Contact Modals -->
   <ContactModal v-model:visible="showModal" side="right" />
-  <ContactModal v-model:visible="showLeftModal" side="left" />
+  <!-- <ContactModal v-model:visible="showLeftModal" side="left" /> -->
 </template>
