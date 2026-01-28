@@ -1,9 +1,5 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
 # Laravel Forge deploy script for martingreenwood.com (Vue/Vite SPA)
 # Uses $FORGE_SITE_BRANCH when run from Forge
-
 cd /home/forge/martingreenwood.com
 
 # Ensure we're on the right branch and pull latest
