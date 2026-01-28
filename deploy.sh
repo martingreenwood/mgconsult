@@ -6,8 +6,12 @@ set -euo pipefail
 
 cd /home/forge/martingreenwood.com
 
-# Ensure we’re on the right branch and pull latest
+# Ensure we're on the right branch and pull latest
 git fetch origin
+
+# Clean up dist directory if it exists (no longer tracked in git)
+rm -rf dist
+
 git reset --hard "origin/${FORGE_SITE_BRANCH:-main}"
 
 # Use project Node version if nvm is available
