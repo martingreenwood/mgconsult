@@ -25,38 +25,92 @@ const openLeftModal = () => {
 }
 
 // Apply SEO from route meta (router-driven, single source of truth).
-// When path is root, always use home meta so the catch-all never overwrites it.
-type RouteSeo = Record<string, unknown> & { canonical?: string }
-const seoFromRoute = computed(() => {
+// TypeScript-friendly: pass an object whose values are computed refs.
+type RouteSeo = {
+  title?: string
+  description?: string
+  ogTitle?: string
+  ogDescription?: string
+  ogImage?: string
+  ogImageWidth?: number
+  ogImageHeight?: number
+  ogUrl?: string
+  ogType?:
+  | 'website'
+  | 'article'
+  | 'book'
+  | 'profile'
+  | 'music.song'
+  | 'music.album'
+  | 'music.playlist'
+  | 'music.radio_status'
+  | 'video.movie'
+  | 'video.episode'
+  | 'video.tv_show'
+  | 'video.other'
+  ogLocale?: string
+  ogSiteName?: string
+  twitterCard?: 'summary_large_image' | 'summary' | 'app' | 'player'
+  twitterTitle?: string
+  twitterDescription?: string
+  twitterImage?: string
+  robots?: string
+  canonical?: string
+}
+
+const homeSeo: RouteSeo = {
+  title: defaultSeo.title,
+  description: defaultSeo.description,
+  ogTitle: defaultSeo.title,
+  ogDescription: defaultSeo.description,
+  ogImage: defaultSeo.ogImage,
+  ogImageWidth: defaultSeo.ogImageWidth,
+  ogImageHeight: defaultSeo.ogImageHeight,
+  ogUrl: `${baseUrl}/`,
+  ogType: 'website',
+  ogLocale: defaultSeo.ogLocale,
+  ogSiteName: defaultSeo.siteName,
+  twitterCard: defaultSeo.twitterCard,
+  twitterTitle: defaultSeo.title,
+  twitterDescription: defaultSeo.description,
+  twitterImage: defaultSeo.ogImage,
+  canonical: `${baseUrl}/`,
+}
+
+const activeSeo = computed<RouteSeo>(() => {
   const path = route.path
   const isRoot = path === '/' || path === ''
-
-  if (isRoot) {
-    return {
-      ...defaultSeo,
-      title: defaultSeo.title,
-      description: defaultSeo.description,
-      ogTitle: defaultSeo.title,
-      ogDescription: defaultSeo.description,
-      ogUrl: `${baseUrl}/`,
-      twitterTitle: defaultSeo.title,
-      twitterDescription: defaultSeo.description,
-      canonical: `${baseUrl}/`,
-    }
-  }
-
-  const seo = (route.meta.seo ?? {}) as RouteSeo
-  const { canonical: _canonical, ...rest } = seo
-  return { ...defaultSeo, ...rest }
+  if (isRoot) return homeSeo
+  return (route.meta.seo as RouteSeo | undefined) ?? {}
 })
-useSeoMeta(seoFromRoute)
+
+useSeoMeta({
+  title: computed(() => activeSeo.value.title ?? defaultSeo.title),
+  description: computed(() => activeSeo.value.description ?? defaultSeo.description),
+
+  ogTitle: computed(() => activeSeo.value.ogTitle ?? activeSeo.value.title ?? defaultSeo.title),
+  ogDescription: computed(() => activeSeo.value.ogDescription ?? activeSeo.value.description ?? defaultSeo.description),
+  ogImage: computed(() => activeSeo.value.ogImage ?? defaultSeo.ogImage),
+  ogImageWidth: computed(() => activeSeo.value.ogImageWidth ?? defaultSeo.ogImageWidth),
+  ogImageHeight: computed(() => activeSeo.value.ogImageHeight ?? defaultSeo.ogImageHeight),
+  ogUrl: computed(() => activeSeo.value.ogUrl ?? `${baseUrl}/`),
+  ogType: computed(() => activeSeo.value.ogType ?? 'website'),
+  ogLocale: computed(() => activeSeo.value.ogLocale ?? defaultSeo.ogLocale),
+  ogSiteName: computed(() => activeSeo.value.ogSiteName ?? defaultSeo.siteName),
+
+  twitterCard: computed(() => activeSeo.value.twitterCard ?? defaultSeo.twitterCard),
+  twitterTitle: computed(() => activeSeo.value.twitterTitle ?? activeSeo.value.title ?? defaultSeo.title),
+  twitterDescription: computed(
+    () => activeSeo.value.twitterDescription ?? activeSeo.value.description ?? defaultSeo.description,
+  ),
+  twitterImage: computed(() => activeSeo.value.twitterImage ?? activeSeo.value.ogImage ?? defaultSeo.ogImage),
+
+  robots: computed(() => activeSeo.value.robots),
+})
+
 useHead({
   link: computed(() => {
-    const path = route.path
-    const isRoot = path === '/' || path === ''
-    const canonical = isRoot
-      ? `${baseUrl}/`
-      : (route.meta.seo as RouteSeo | undefined)?.canonical
+    const canonical = activeSeo.value.canonical ?? `${baseUrl}/`
     return canonical ? [{ rel: 'canonical', href: canonical }] : []
   }),
 })
