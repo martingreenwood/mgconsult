@@ -50,7 +50,10 @@ const seoFromRoute = computed(() => {
   const { canonical: _canonical, ...rest } = seo
   return { ...defaultSeo, ...rest }
 })
-useSeoMeta(seoFromRoute)
+useSeoMeta(seoFromRoute.value)
+watch(seoFromRoute, (newSeo) => {
+  useSeoMeta(newSeo)
+}, { immediate: true })
 useHead({
   link: computed(() => {
     const path = route.path
