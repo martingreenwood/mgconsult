@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { createHead } from '@unhead/vue/client'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
@@ -36,6 +37,7 @@ window.addEventListener('unhandledrejection', (event) => {
   event.preventDefault()
 })
 
+app.use(createHead())
 app.use(createPinia())
 app.use(router)
 

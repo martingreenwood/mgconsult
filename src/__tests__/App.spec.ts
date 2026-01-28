@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import { nextTick, ref } from 'vue'
 import App from '../App.vue'
+import router from '@/router'
 
 // Create shared reactive state for the mock
 const mockIsDark = ref(false)
@@ -13,6 +14,12 @@ vi.mock('@/composables/useTheme', () => ({
     isDark: mockIsDark,
     initTheme: mockInitTheme,
   }),
+}))
+
+// Mock @unhead/vue (SEO is applied from route meta in production)
+vi.mock('@unhead/vue', () => ({
+  useSeoMeta: vi.fn(),
+  useHead: vi.fn(),
 }))
 
 // Mock child components to isolate App.vue
@@ -73,15 +80,17 @@ vi.mock('@/components/ThemeToggle.vue', () => ({
 }))
 
 describe('App.vue', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks()
     mockIsDark.value = false
+    await router.replace('/')
   })
 
   describe('Theme initialization', () => {
     it('initializes theme correctly on mount', async () => {
       mount(App, {
         global: {
+          plugins: [router],
           stubs: {
             ContactModal: true,
             BaseButton: true,
@@ -91,6 +100,7 @@ describe('App.vue', () => {
             FAQ: true,
             Testimonials: true,
             ThemeToggle: true,
+            RouterView: true,
           },
         },
       })
@@ -105,6 +115,7 @@ describe('App.vue', () => {
     it('updates logo color correctly based on scroll position and theme', async () => {
       const wrapper = mount(App, {
         global: {
+          plugins: [router],
           stubs: {
             ContactModal: true,
             BaseButton: true,
@@ -114,6 +125,7 @@ describe('App.vue', () => {
             FAQ: true,
             Testimonials: true,
             ThemeToggle: true,
+            RouterView: true,
           },
         },
         attachTo: document.body,
@@ -148,6 +160,7 @@ describe('App.vue', () => {
 
       const wrapper = mount(App, {
         global: {
+          plugins: [router],
           stubs: {
             ContactModal: true,
             BaseButton: true,
@@ -157,6 +170,7 @@ describe('App.vue', () => {
             FAQ: true,
             Testimonials: true,
             ThemeToggle: true,
+            RouterView: true,
           },
         },
         attachTo: document.body,
