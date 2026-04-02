@@ -40,7 +40,7 @@
 
               <!-- Choom booking widget container (script loads when modal opens) -->
               <div class="rounded-lg min-h-[600px]" :class="{ 'hidden': widgetLoading }">
-                <div id="choom-booking-widget" data-event-type-uuid="52327d96-65f9-4d63-802f-e22b9aba13aa"></div>
+                <div id="choom-booking-widget" data-event-type-uuid="b04a60f0-8ec4-4ac8-bb0a-20cfe2379b3e"></div>
               </div>
             </div>
 
@@ -171,7 +171,7 @@ const modalRef = ref<HTMLElement | null>(null)
 const closeButtonRef = ref<HTMLButtonElement | null>(null)
 const widgetLoading = ref(true)
 
-const CHOOM_SCRIPT_URL = 'https://choom.app/js/widget.js'
+const CHOOM_SCRIPT_URL = 'https://scheduling.choom.app/js/widget.js?v=1775112417'
 
 const loadChoomScript = (onLoaded?: () => void) => {
   if (document.querySelector(`script[src="${CHOOM_SCRIPT_URL}"]`)) {
