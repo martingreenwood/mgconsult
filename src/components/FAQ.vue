@@ -85,8 +85,15 @@ const faqs: FAQ[] = [
   {
     question: "What types of projects do you typically work on?",
     answer: [
-      "I specialize in custom digital systems for hospitality, events, and experience-led businesses. This includes booking engines, CRM integrations, digital signage, data dashboards, and bespoke web applications.",
-      "Most projects involve Laravel and Vue.js, with integrations to systems like Spektrix, various PMS/CRM platforms, and payment gateways."
+      "I work on custom digital systems for businesses with complex operations, disconnected tools, or workflows that off-the-shelf software does not quite cover. That includes integrations, internal tools, booking and scheduling flows, dashboards, CMS builds, and bespoke web applications.",
+      "Most projects involve Laravel and Vue.js, with integrations across CRMs, payment gateways, booking tools, reporting systems, legacy platforms, and specialist industry software."
+    ]
+  },
+  {
+    question: "Do you work outside hospitality?",
+    answer: [
+      "Yes. I have deep experience from hotel, venue, hospitality, and experience-led work, but the way I work is sector-agnostic.",
+      "I learn how the business operates, map the awkward parts of the workflow, then design and build reliable systems around the real constraints. That approach travels well across sectors."
     ]
   },
   {
@@ -99,7 +106,7 @@ const faqs: FAQ[] = [
   {
     question: "How long does a typical project take?",
     answer: [
-      "Project timelines vary significantly based on complexity. A simple API integration might take a few days, while a full booking engine could take several weeks.",
+      "Project timelines vary significantly based on complexity. A simple API integration might take a few days, while a full workflow, booking, or internal system could take several weeks.",
       "I'll give you a realistic timeline during our discovery phase, and I keep you updated throughout with regular check-ins and progress updates."
     ]
   },

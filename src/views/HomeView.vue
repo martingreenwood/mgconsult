@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref } from 'vue'
 import BaseButton from '@/components/BaseButton.vue'
 import RecentProjects from '@/components/RecentProjects.vue'
 import Testimonials from '@/components/Testimonials.vue'
 import FAQ from '@/components/FAQ.vue'
 
-const videoTransform = ref('translateY(0px)')
 const activeAccordion = ref<number | null>(0)
-let ticking = false
 
 const openContact = () => {
   window.dispatchEvent(new CustomEvent('open-contact-modal'))
@@ -16,52 +14,6 @@ const openContact = () => {
 const toggleAccordion = (index: number) => {
   activeAccordion.value = activeAccordion.value === index ? null : index
 }
-
-const updateParallax = () => {
-  const scrolled = window.pageYOffset
-  const videoSection = document.querySelector('.video-parallax-section') as HTMLElement
-
-  if (videoSection) {
-    const rect = videoSection.getBoundingClientRect()
-    const sectionTop = scrolled + rect.top
-    const sectionHeight = rect.height
-    const windowHeight = window.innerHeight
-
-    const sectionBottom = sectionTop + sectionHeight
-    const viewportTop = scrolled
-    const viewportBottom = scrolled + windowHeight
-
-    if (sectionBottom >= viewportTop && sectionTop <= viewportBottom) {
-      const scrollStart = sectionTop - windowHeight
-      const scrollEnd = sectionBottom
-      const scrollRange = scrollEnd - scrollStart
-      const scrollProgress = Math.max(0, Math.min(1, (scrolled - scrollStart) / scrollRange))
-
-      const maxMovement = sectionHeight * 0.15
-      const yPos = -maxMovement + (scrollProgress * maxMovement * 2)
-
-      videoTransform.value = `translateY(${yPos}px)`
-    }
-  }
-
-  ticking = false
-}
-
-const onScroll = () => {
-  if (!ticking) {
-    requestAnimationFrame(updateParallax)
-    ticking = true
-  }
-}
-
-onMounted(() => {
-  window.addEventListener('scroll', onScroll, { passive: true })
-  updateParallax()
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', onScroll)
-})
 </script>
 
 <template>
@@ -70,13 +22,12 @@ onUnmounted(() => {
     aria-label="Hero introduction">
     <h1
       class="text-7xl text-shadow-slate-900 dark:text-shadow-slate-100 max-w-6xl coco text-slate-900 dark:text-white">
-      I build custom digital systems that actually <span
-        class="text-slate-600 dark:text-slate-300 font-bold">solve</span> business problems.
+      Custom digital systems for businesses with <span
+        class="text-slate-600 dark:text-slate-300 font-bold">complex</span> operations.
     </h1>
     <p class="text-xl font-light text-gray-600 dark:text-gray-200 max-w-4xl">
-      From broken booking flows to legacy integrations, I help hospitality and experience-led businesses
-      streamline operations, simplify tech, and deliver better digital experiences
-      — without the agency overhead.
+      I help teams turn messy workflows, disconnected tools, legacy systems, internal apps, booking flows,
+      and dashboards into reliable digital systems, without the agency overhead.
     </p>
     <div class="flex flex-row">
       <BaseButton variant="primary" size="lg" :has-arrow="true" @click="openContact"
@@ -86,25 +37,45 @@ onUnmounted(() => {
     </div>
   </section>
 
-  <section class="video-parallax-section bg-stone-100 dark:bg-dark-surface h-[75vh] overflow-hidden relative"
-    aria-label="Background video showcase">
-    <video autoplay loop muted playsinline preload="metadata" aria-hidden="true"
-      class="absolute w-full h-[140%] object-cover" style="top: -20%; left: 0;"
-      :style="{ transform: videoTransform }">
-      <source src="../assets/video/video.mp4" type="video/mp4">
-      <p>Your browser does not support the video tag. This is a decorative background video that does not contain
-        essential content.</p>
-    </video>
+  <section class="showcase-section" aria-labelledby="showcase-heading">
+    <div class="showcase-media" aria-hidden="true">
+      <img src="../assets/projects/hoar-cross-hall.jpg" alt="" loading="eager" decoding="async">
+      <img src="../assets/projects/the-elms.jpg" alt="" loading="eager" decoding="async">
+      <img src="../assets/projects/the-vineyard.jpg" alt="" loading="eager" decoding="async">
+      <img src="../assets/projects/villa-hotels.jpg" alt="" loading="eager" decoding="async">
+    </div>
+    <div class="showcase-overlay"></div>
+    <div class="showcase-content max-w-6xl mx-auto">
+      <div class="showcase-copy">
+        <p class="showcase-kicker">Project signals</p>
+        <h2 id="showcase-heading">Systems that connect customer journeys, internal teams, and the tools behind the scenes.</h2>
+        <p>
+          Booking flows, CMS builds, portals, dashboards, payments, signage, and legacy platforms, joined up into
+          calmer day-to-day operations.
+        </p>
+      </div>
+      <div class="showcase-system-map" aria-label="Example connected system map">
+        <span>Website</span>
+        <span>Workflow engine</span>
+        <span>CRM / operations</span>
+        <span>Payments</span>
+        <span>Dashboards</span>
+        <span>Signage</span>
+      </div>
+    </div>
   </section>
 
   <section class="services-section bg-white dark:bg-dark-bg" aria-labelledby="services-heading">
-    <div class="flex flex-col gap-24 max-w-6xl mx-auto">
-      <h2 id="services-heading" class="sr-only">Services I Provide</h2>
-      <p class="text-xl font-light text-gray-600 dark:text-gray-200 max-w-2xl">
-        I design, build, and integrate digital systems for guest-centric, experience-driven, and operationally complex
-        businesses. Whether it's customer-facing tools or internal dashboards, I deliver clean, scalable solutions
-        that make life easier for teams and their users.
-      </p>
+    <div class="flex flex-col gap-14 max-w-6xl mx-auto">
+      <div class="services-intro">
+        <p class="services-kicker">Services</p>
+        <h2 id="services-heading">Practical digital systems, built around the messy bits.</h2>
+        <p>
+          I design, build, and integrate digital systems for businesses where off-the-shelf software does not quite fit.
+          Whether it is customer-facing tools, internal dashboards, or the glue between platforms, I deliver clean,
+          scalable solutions that make life easier for teams and their users.
+        </p>
+      </div>
 
       <div class="masonry-container" role="list">
         <div class="card" role="listitem">
@@ -117,12 +88,13 @@ onUnmounted(() => {
             </h3>
           </div>
           <p class="block text-slate-600 dark:text-gray-300 leading-normal font-light">
-            Connect your booking engine, CRM, ticketing, POS, signage, and CMS into one reliable, futureproof stack.
+            Connect CRMs, booking tools, ticketing, POS, payments, signage, CMS platforms, and legacy systems into one
+            reliable stack.
           </p>
           <ul aria-label="Systems integration services">
-            <li>API integrations</li>
-            <li>CRM/PMS workflows</li>
-            <li>Spektrix, hospitality, and legacy system support</li>
+            <li>API integrations & data sync</li>
+            <li>CRM, operations & workflow automation</li>
+            <li>Legacy platform support</li>
           </ul>
         </div>
 
@@ -139,9 +111,9 @@ onUnmounted(() => {
             data dumps.
           </p>
           <ul aria-label="Data dashboard services">
-            <li>Guest behaviour insights</li>
-            <li>Marketing &amp; sales metrics</li>
-            <li>Ops dashboards & group performance tracking</li>
+            <li>Commercial &amp; operational visibility</li>
+            <li>Marketing, sales &amp; performance metrics</li>
+            <li>Team dashboards &amp; group reporting</li>
           </ul>
         </div>
 
@@ -154,12 +126,12 @@ onUnmounted(() => {
             </h3>
           </div>
           <p class="block text-slate-600 dark:text-gray-300 leading-normal font-light">
-            Custom signage systems that pull from live data — built for theatres, hotels, events, and dynamic venue
-            screens.
+            Custom display systems that pull from live data, built for venues, workplaces, events, and physical spaces
+            that need up-to-date information on screen.
           </p>
           <ul aria-label="Digital signage services">
-            <li>Foyer &amp; event signage</li>
-            <li>Wayfinding &amp; guest comms</li>
+            <li>Live schedules &amp; event signage</li>
+            <li>Wayfinding &amp; customer comms</li>
             <li>CMS-linked display tech</li>
           </ul>
         </div>
@@ -179,7 +151,7 @@ onUnmounted(() => {
           <ul aria-label="Web and app development services">
             <li>Vue &amp; Laravel custom builds</li>
             <li>Statamic &amp; WordPress development</li>
-            <li>Guest portals, booking flows, staff apps</li>
+            <li>Portals, booking flows &amp; staff tools</li>
           </ul>
         </div>
 
@@ -192,13 +164,13 @@ onUnmounted(() => {
             </h3>
           </div>
           <p class="block text-slate-600 dark:text-gray-300 leading-normal font-light">
-            Integrated booking flows that play nicely with your existing systems, including full Spektrix support for
-            venues.
+            Reservation, scheduling, enrolment, and ticketing flows that play nicely with existing systems, availability
+            rules, and payment journeys.
           </p>
           <ul aria-label="Booking engine services">
-            <li>Custom booking interfaces</li>
-            <li>Real-time availability & logic</li>
-            <li>End-to-end ticketing integrations</li>
+            <li>Custom booking &amp; scheduling interfaces</li>
+            <li>Real-time availability &amp; business logic</li>
+            <li>Ticketing, payments &amp; platform integrations</li>
           </ul>
         </div>
 
@@ -216,8 +188,8 @@ onUnmounted(() => {
           </p>
           <ul aria-label="Technical consulting services">
             <li>Discovery &amp; technical audits</li>
-            <li>Project rescue & legacy fixes</li>
-            <li>Long-term dev partner, if you need one</li>
+            <li>Project rescue &amp; legacy fixes</li>
+            <li>Roadmaps, retainers &amp; long-term support</li>
           </ul>
         </div>
       </div>
@@ -233,10 +205,10 @@ onUnmounted(() => {
     <div class="flex flex-col md:flex-row items-end gap-8 max-w-6xl mx-auto">
       <div class="flex flex-col gap-1">
         <h2 class="text-3xl coco text-slate-900 dark:text-white">
-          Not sure where your project fits?
+          Not sure what the fix should be yet?
         </h2>
         <p class="text-lg font-light text-gray-600 dark:text-gray-200 max-w-4xl">
-          Get in touch for a chat.
+          A practical call is usually enough to map the pressure points and decide what is worth doing next.
         </p>
       </div>
       <div class="flex flex-row ml-auto">
@@ -252,16 +224,16 @@ onUnmounted(() => {
     <div class="flex flex-col md:flex-row gap-8 items-start max-w-6xl mx-auto">
       <div class="flex flex-col gap-8">
         <h2 id="approach-heading" class="text-2xl max-w-6xl coco text-white">
-          Adapt to Change...
+          Built for the work as it really happens.
         </h2>
         <p class="text-xl font-light text-gray-100 dark:text-gray-200 max-w-4xl">
-          I work with clients to build custom, future proof systems that can adapt to changing business needs and user
-          expectations. I rely on imagination and technical prowess to help brands transform, shine, and reinvent
-          themselves commercially and culturally.
+          I learn how a business actually runs, then design and build systems around the operational details that
+          generic software usually misses. The aim is practical progress: clearer workflows, fewer manual workarounds,
+          and technology that can adapt as the business changes.
         </p>
         <p class="text-xl font-light text-gray-100 dark:text-gray-200 max-w-4xl">
-          My biggest value is the client's trust.<br>
-          My only achievement is their success.
+          Deep hospitality and venue experience gives me useful pattern recognition, but the method is sector-agnostic:
+          understand the domain, simplify the moving parts, and ship dependable systems.
         </p>
       </div>
       <div class="flex flex-col gap-8">
@@ -343,39 +315,39 @@ onUnmounted(() => {
     <div class="flex flex-col md:flex-row gap-8 items-start max-w-6xl mx-auto">
       <div class="flex flex-col gap-8">
         <h2 id="trust-heading" class="text-2xl max-w-6xl coco text-slate-900 dark:text-white">
-          Trust is earned, not given
+          Trusted with operationally important systems
         </h2>
         <p class="text-xl font-light text-gray-600 dark:text-gray-200 max-w-4xl">
-          Every project is a chance to change someone's life. Courtesy of our clients, we impact millions of lives and
-          create a better future for everyone.
+          These clients reflect deep experience in hospitality, venues, heritage, and experience-led organisations,
+          useful proof for any business that needs reliable systems behind complex day-to-day work.
         </p>
       </div>
       <div class="flex flex-col gap-8">
-        <div class="grid grid-cols-2 gap-8 items-center justify-items-center opacity-60" role="list"
+        <div class="trust-logo-grid grid grid-cols-2 gap-8 items-center justify-items-center" role="list"
           aria-label="Trusted client logos">
-          <div class="p-4 bg-stone-100 dark:bg-dark-surface w-full" role="listitem">
+          <div class="trust-logo-tile" role="listitem">
             <img src="../assets/trust/be.svg" alt="Barons Eden logo"
-              class="h-12 w-auto mx-auto dark:invert transition-all duration-300" loading="lazy">
+              class="trust-logo h-12 w-auto mx-auto transition-all duration-300" loading="lazy">
           </div>
-          <div class="p-4 bg-stone-100 dark:bg-dark-surface w-full" role="listitem">
+          <div class="trust-logo-tile" role="listitem">
             <img src="../assets/trust/elms.svg" alt="The Elms logo"
-              class="h-12 w-auto mx-auto dark:invert transition-all duration-300" loading="lazy">
+              class="trust-logo h-12 w-auto mx-auto transition-all duration-300" loading="lazy">
           </div>
-          <div class="p-4 bg-stone-100 dark:bg-dark-surface w-full" role="listitem">
+          <div class="trust-logo-tile" role="listitem">
             <img src="../assets/trust/eh.svg" alt="English Heritage logo"
-              class="h-12 w-auto mx-auto dark:invert transition-all duration-300" loading="lazy">
+              class="trust-logo h-12 w-auto mx-auto transition-all duration-300" loading="lazy">
           </div>
-          <div class="p-4 bg-stone-100 dark:bg-dark-surface w-full" role="listitem">
+          <div class="trust-logo-tile" role="listitem">
             <img src="../assets/trust/hch.svg" alt="Hoar Cross Hall logo"
-              class="h-12 w-auto mx-auto dark:invert transition-all duration-300" loading="lazy">
+              class="trust-logo h-12 w-auto mx-auto transition-all duration-300" loading="lazy">
           </div>
-          <div class="p-4 bg-stone-100 dark:bg-dark-surface w-full" role="listitem">
+          <div class="trust-logo-tile" role="listitem">
             <img src="../assets/trust/middle8.svg" alt="Middle8 Hotel logo"
-              class="h-16 w-auto mx-auto dark:invert transition-all duration-300" loading="lazy">
+              class="trust-logo h-16 w-auto mx-auto transition-all duration-300" loading="lazy">
           </div>
-          <div class="p-4 bg-stone-100 dark:bg-dark-surface w-full" role="listitem">
+          <div class="trust-logo-tile" role="listitem">
             <img src="../assets/trust/pob.svg" alt="Palace of Bournemouth logo"
-              class="h-16 w-auto mx-auto dark:invert transition-all duration-300" loading="lazy">
+              class="trust-logo h-16 w-auto mx-auto transition-all duration-300" loading="lazy">
           </div>
         </div>
       </div>

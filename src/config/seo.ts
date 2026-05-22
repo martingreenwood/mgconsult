@@ -5,9 +5,9 @@
 export const baseUrl = 'https://martingreenwood.com'
 
 export const defaultSeo = {
-  title: 'Martin Greenwood | Consultant Developer – Laravel, Vue, Integration Specialist',
+  title: 'Martin Greenwood | Consultant Developer - Laravel, Vue & Systems Integration',
   description:
-    'I help businesses build, fix, and scale digital systems. Laravel/Vue developer with 10+ years experience in integrations, signage, dashboards & booking engines.',
+    'I help businesses build, fix, and scale custom digital systems. Laravel and Vue consultant for integrations, dashboards, booking workflows, internal tools, and technical rescue.',
   ogImage: `${baseUrl}/og-image.jpg`,
   ogImageWidth: 1200,
   ogImageHeight: 630,

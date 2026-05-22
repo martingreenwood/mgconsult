@@ -17,49 +17,49 @@ const getImageUrl = (name: string) => {
 const projects: Project[] = [
   {
     id: 1,
-    title: "Luxury Spa Booking Experience",
+    title: "Real-Time Availability Workflow",
     client: "Barons Eden",
-    description: "Complete booking system integration with real-time availability, guest portal, and seamless spa experience management.",
+    description: "Booking system integration with live availability, customer portal journeys, and operational tools for managing high-value experiences.",
     image: getImageUrl('hoar-cross-hall.jpg'),
-    tags: ["Booking Integration", "Guest Portal", "Real-time Data"]
+    tags: ["Availability Logic", "Customer Portal", "Real-time Data"]
   },
   {
     id: 2,
-    title: "Countryside Retreat",
+    title: "CMS & Event Booking Flow",
     client: "The Elms",
-    description: "Custom CMS and event booking flow for historic venue with integrated payment processing and guest communications.",
+    description: "Custom CMS and event booking flow with integrated payments, content workflows, and customer communications for a busy historic venue.",
     image: getImageUrl('the-elms.jpg'),
-    tags: ["Event Management", "Payment Integration", "CMS"]
+    tags: ["Event Workflows", "Payment Integration", "CMS"]
   },
   {
     id: 3,
-    title: "Boutique Hotel",
+    title: "Pricing & Operations Integration",
     client: "Villa Hotels",
-    description: "Modern booking engine with dynamic pricing, guest preferences, and comprehensive PMS integration.",
+    description: "Modern booking engine work connecting dynamic pricing, customer preferences, reporting needs, and back-office platform integration.",
     image: getImageUrl('villa-hotels.jpg'),
-    tags: ["Dynamic Pricing", "PMS Integration", "Analytics"]
+    tags: ["Dynamic Pricing", "Platform Integration", "Analytics"]
   },
   {
     id: 4,
-    title: "Luxury Hotel & Spa",
+    title: "Group Booking & Commerce Flow",
     client: "The Vineyard",
-    description: "Custom booking engine with group booking, e-commerce, and spa experience management.",
+    description: "Custom booking and commerce flows for group reservations, online sales, and operational management across multiple customer journeys.",
     image: getImageUrl('the-vineyard.jpg'),
-    tags: ["Group Booking", "E-commerce", "Experience Management"]
+    tags: ["Group Booking", "E-commerce", "Workflow Design"]
   }
 ]
 </script>
 
 <template>
-  <section class="projects-section dark-section bg-zinc-800 dark:bg-zinc-900">
+  <section class="projects-section dark-section bg-zinc-800 dark:bg-zinc-900" aria-labelledby="projects-heading">
     <div class="flex flex-col gap-24 max-w-6xl mx-auto">
       <div class="flex flex-col gap-4">
-        <h2 class="text-2xl max-w-6xl coco text-white">
+        <h2 id="projects-heading" class="text-2xl max-w-6xl coco text-white">
           Recent Projects
         </h2>
         <p class="text-xl font-light text-gray-100 dark:text-gray-200 max-w-4xl">
-          A selection of recent work across hospitality, events, and experience-driven businesses.
-          Each project solved real operational challenges while delivering better user experiences.
+          Selected examples from hospitality, venues, and experience-led work, reframed around the operational problems
+          they solved: availability, payments, content workflows, reporting, and connected customer journeys.
         </p>
       </div>
 
