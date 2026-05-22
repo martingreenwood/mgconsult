@@ -19,7 +19,7 @@ const toggleAccordion = (index: number) => {
 
 <template>
   <section
-    class="hero-section  dark:bg-dark-bg max-w-6xl mx-auto min-h-screen flex flex-col gap-8 justify-end"
+    class="hero-section  max-w-6xl mx-auto min-h-screen flex flex-col gap-8 justify-end"
     aria-label="Hero introduction">
     <h1
       class="text-7xl text-shadow-slate-900 dark:text-shadow-slate-100 max-w-6xl coco text-slate-900 dark:text-white">
