@@ -18,7 +18,7 @@ const toggleAccordion = (index: number) => {
 
 <template>
   <section
-    class="hero-section bg-white dark:bg-dark-bg max-w-6xl mx-auto min-h-screen flex flex-col gap-8 justify-end"
+    class="hero-section  dark:bg-dark-bg max-w-6xl mx-auto min-h-screen flex flex-col gap-8 justify-end"
     aria-label="Hero introduction">
     <h1
       class="text-7xl text-shadow-slate-900 dark:text-shadow-slate-100 max-w-6xl coco text-slate-900 dark:text-white">
@@ -200,7 +200,7 @@ const toggleAccordion = (index: number) => {
 
   <Testimonials />
 
-  <section class="cta-section bg-neutral-100 dark:bg-dark-surface text-shadow-zinc-800 dark:text-shadow-zinc-200"
+  <section class="cta-section bg-stone-100 dark:bg-dark-surface border-y border-stone-200 dark:border-dark-border text-shadow-zinc-800 dark:text-shadow-zinc-200"
     aria-label="Call to action">
     <div class="flex flex-col md:flex-row items-end gap-8 max-w-6xl mx-auto">
       <div class="flex flex-col gap-1">

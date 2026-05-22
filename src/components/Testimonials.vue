@@ -14,7 +14,7 @@
         <div
           v-for="(proofPoint, index) in proofPoints"
           :key="index"
-          class="testimonial-card bg-white dark:bg-dark-surface rounded-lg p-8 shadow-sm dark:shadow-none hover:shadow-md dark:hover:shadow-lg dark:hover:shadow-black/20 transition-shadow duration-300 flex flex-col"
+          class="testimonial-card bg-white/95 dark:bg-dark-surface rounded-lg border border-slate-200/80 dark:border-dark-border p-8 shadow-md dark:shadow-none hover:shadow-lg dark:hover:shadow-lg dark:hover:shadow-black/20 transition-shadow duration-300 flex flex-col"
           role="listitem"
         >
           <div class="mb-5">

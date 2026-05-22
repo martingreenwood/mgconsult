@@ -1,4 +1,4 @@
-import { ref, watch, onMounted } from 'vue'
+import { ref } from 'vue'
 
 export type Theme = 'light' | 'dark' | 'system'
 
@@ -29,6 +29,8 @@ export function useTheme() {
     } else {
       document.documentElement.classList.remove('dark')
     }
+
+    document.documentElement.style.colorScheme = shouldBeDark ? 'dark' : 'light'
   }
 
   // Set theme

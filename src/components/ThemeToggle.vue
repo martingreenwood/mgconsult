@@ -1,19 +1,32 @@
 <template>
   <button
     @click="toggleTheme"
-    class="theme-toggle w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+    class="theme-toggle w-11 h-11 rounded-full flex items-center justify-center transition-colors duration-300 backdrop-blur-md border"
     :class="[
       isDark
-        ? 'bg-slate-700 text-yellow-300 hover:bg-slate-600'
-        : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
+        ? 'bg-neutral-900/75 text-amber-200 border-white/15 shadow-[0_18px_45px_oklch(0%_0_0_/_0.32)] hover:bg-neutral-800/85'
+        : 'bg-stone-50/95 text-slate-950 border-slate-950/25 shadow-[0_14px_35px_oklch(28%_0.03_250_/_0.18)] hover:bg-white'
     ]"
     :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
     :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
   >
-    <!-- Sun Icon (Light Mode) -->
+    <!-- Moon icon: action shown while light mode is active -->
     <Transition name="icon-fade" mode="out-in">
       <svg
         v-if="!isDark"
+        key="moon"
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+      </svg>
+
+      <!-- Sun icon: action shown while dark mode is active -->
+      <svg
+        v-else
         key="sun"
         xmlns="http://www.w3.org/2000/svg"
         class="h-5 w-5"
@@ -27,38 +40,14 @@
           clip-rule="evenodd"
         />
       </svg>
-
-      <!-- Moon Icon (Dark Mode) -->
-      <svg
-        v-else
-        key="moon"
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-5 w-5"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-      </svg>
     </Transition>
   </button>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
 import { useTheme } from '@/composables/useTheme'
 
-const { isDark, toggleTheme, initTheme } = useTheme()
-
-let cleanup: (() => void) | undefined
-
-onMounted(() => {
-  cleanup = initTheme()
-})
-
-onUnmounted(() => {
-  if (cleanup) cleanup()
-})
+const { isDark, toggleTheme } = useTheme()
 </script>
 
 <style scoped>
@@ -82,17 +71,8 @@ onUnmounted(() => {
   transform: rotate(90deg) scale(0.8);
 }
 
-/* Add a subtle animation on hover */
-.theme-toggle:hover svg {
-  animation: pulse-subtle 1s ease-in-out infinite;
-}
-
-@keyframes pulse-subtle {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.8;
-  }
+.theme-toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
 }
 </style>
