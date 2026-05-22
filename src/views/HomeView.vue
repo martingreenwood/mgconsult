@@ -29,10 +29,21 @@ const toggleAccordion = (index: number) => {
       I help teams turn messy workflows, disconnected tools, legacy systems, internal apps, booking flows,
       and dashboards into reliable digital systems, without the agency overhead.
     </p>
-    <div class="flex flex-row">
+    <div class="flex flex-col sm:flex-row gap-3">
       <BaseButton variant="primary" size="lg" :has-arrow="true" @click="openContact"
         aria-label="Book a consultation call">
         Book a Call
+      </BaseButton>
+      <BaseButton
+        variant="secondary"
+        size="lg"
+        data-tally-open="Bz27eR"
+        data-tally-auto-close="0"
+        data-tally-form-events-forwarding="1"
+        data-source="hero"
+        aria-label="Send a project message"
+      >
+        Send a Message
       </BaseButton>
     </div>
   </section>
@@ -211,10 +222,21 @@ const toggleAccordion = (index: number) => {
           A practical call is usually enough to map the pressure points and decide what is worth doing next.
         </p>
       </div>
-      <div class="flex flex-row ml-auto">
+      <div class="flex flex-col sm:flex-row gap-3 md:ml-auto">
         <BaseButton variant="primary" size="lg" :has-arrow="true" @click="openContact"
           aria-label="Book a consultation call">
           Book a Call
+        </BaseButton>
+        <BaseButton
+          variant="secondary"
+          size="lg"
+          data-tally-open="Bz27eR"
+          data-tally-auto-close="0"
+          data-tally-form-events-forwarding="1"
+          data-source="cta"
+          aria-label="Send a project message"
+        >
+          Send a Message
         </BaseButton>
       </div>
     </div>

@@ -462,7 +462,7 @@ footer {
 }
 
 .footer-bottom {
-    @apply flex flex-col gap-3 border-t border-white/12 pt-6 text-sm text-slate-400 md:flex-row md:items-center md:justify-between md:pr-44;
+    @apply flex flex-col gap-3 border-t border-white/12 pt-6 text-sm text-slate-400 md:flex-row md:items-center md:justify-between;
 }
 
 .footer-bottom a {

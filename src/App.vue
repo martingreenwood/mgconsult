@@ -16,6 +16,7 @@ const { isDark, initTheme } = useTheme()
 const logoColor = ref('#000')
 const showModal = ref(false)
 const showLeftModal = ref(false)
+const hideFloatingContactButton = ref(false)
 const currentYear = new Date().getFullYear()
 let ticking = false
 
@@ -122,7 +123,6 @@ const updateLogoColor = () => {
   // When not on home, sections don't exist; use default
   if (route.name !== 'home') {
     logoColor.value = isDark.value ? '#fff' : '#000'
-    ticking = false
     return
   }
 
@@ -131,7 +131,6 @@ const updateLogoColor = () => {
 
   if (isDark.value) {
     logoColor.value = '#fff'
-    ticking = false
     return
   }
 
@@ -152,24 +151,43 @@ const updateLogoColor = () => {
 
     for (const element of elements) {
       const rect = element.getBoundingClientRect()
+
+      if (rect.height <= 0) {
+        continue
+      }
+
       const elementTop = scrolled + rect.top
       const elementBottom = elementTop + rect.height
 
       if (scrolled + headerHeight >= elementTop && scrolled <= elementBottom) {
         logoColor.value = section.color
-        ticking = false
         return
       }
     }
   }
 
   logoColor.value = '#000'
-  ticking = false
+}
+
+const updateFloatingContactVisibility = () => {
+  const footer = document.querySelector<HTMLElement>('#site-footer')
+
+  if (!footer) {
+    hideFloatingContactButton.value = false
+    return
+  }
+
+  const rect = footer.getBoundingClientRect()
+  hideFloatingContactButton.value = rect.top < window.innerHeight && rect.bottom > 0
 }
 
 const onScroll = () => {
   if (!ticking) {
-    requestAnimationFrame(updateLogoColor)
+    requestAnimationFrame(() => {
+      updateLogoColor()
+      updateFloatingContactVisibility()
+      ticking = false
+    })
     ticking = true
   }
 }
@@ -179,13 +197,19 @@ const handleOpenContactModal = () => {
 }
 
 watch(isDark, () => {
-  requestAnimationFrame(updateLogoColor)
+  requestAnimationFrame(() => {
+    updateLogoColor()
+    updateFloatingContactVisibility()
+  })
 })
 
 watch(
   () => route.name,
   () => {
-    requestAnimationFrame(updateLogoColor)
+    requestAnimationFrame(() => {
+      updateLogoColor()
+      updateFloatingContactVisibility()
+    })
   }
 )
 
@@ -196,7 +220,11 @@ onMounted(async () => {
   window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('open-contact-modal', handleOpenContactModal)
   updateLogoColor()
-  requestAnimationFrame(updateLogoColor)
+  updateFloatingContactVisibility()
+  requestAnimationFrame(() => {
+    updateLogoColor()
+    updateFloatingContactVisibility()
+  })
 })
 
 onUnmounted(() => {
@@ -241,7 +269,17 @@ onUnmounted(() => {
               aria-label="Book a consultation call">
               Book a Call
             </BaseButton>
-            <a class="footer-secondary-link" href="/#services-heading">View services</a>
+            <button
+              class="footer-secondary-link"
+              type="button"
+              data-tally-open="Bz27eR"
+              data-tally-auto-close="0"
+              data-tally-form-events-forwarding="1"
+              data-source="footer-cta"
+              aria-label="Send a project message"
+            >
+              Send a Message
+            </button>
           </div>
         </div>
 
@@ -281,6 +319,15 @@ onUnmounted(() => {
             <h2>Start small</h2>
             <p>A 15-minute consultation is usually enough to work out where the pressure points are.</p>
             <button type="button" @click="openModal">Book a consultation</button>
+            <button
+              type="button"
+              data-tally-open="Bz27eR"
+              data-tally-auto-close="0"
+              data-tally-form-events-forwarding="1"
+              data-source="footer-contact"
+            >
+              Send a message
+            </button>
             <a href="/downloads/rate-card.pdf" download>Download rate card</a>
           </div>
         </div>
@@ -293,7 +340,11 @@ onUnmounted(() => {
     </footer>
   </main>
 
-  <FloatingContactButton @click="openModal" :logo-color="logoColor" />
+  <FloatingContactButton
+    @click="openModal"
+    :logo-color="logoColor"
+    :is-hidden="hideFloatingContactButton"
+  />
 
   <ScrollToTop :is-blurred="showModal || showLeftModal" />
 

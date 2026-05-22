@@ -44,16 +44,29 @@
       </div>
 
       <!-- Call to Action -->
-      <div class="text-center pt-4">
+      <div class="text-center pt-4 flex flex-col items-center">
         <p class="text-slate-600 dark:text-gray-200 mb-4">Ready to work together?</p>
-        <BaseButton
-          variant="primary"
-          size="md"
-          @click="openContact"
-          aria-label="Book a consultation call"
-        >
-          Let's Talk
-        </BaseButton>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <BaseButton
+            variant="primary"
+            size="md"
+            @click="openContact"
+            aria-label="Book a consultation call"
+          >
+            Book a Call
+          </BaseButton>
+          <BaseButton
+            variant="secondary"
+            size="md"
+            data-tally-open="Bz27eR"
+            data-tally-auto-close="0"
+            data-tally-form-events-forwarding="1"
+            data-source="proof"
+            aria-label="Send a project message"
+          >
+            Send a Message
+          </BaseButton>
+        </div>
       </div>
     </div>
   </section>

@@ -1,6 +1,8 @@
 <template>
   <div
     class="floating-contact-button"
+    :class="{ 'is-hidden': isHidden }"
+    :aria-hidden="isHidden"
     @click="$emit('click')"
   >
     <!-- Rotating text -->
@@ -35,10 +37,12 @@ import { computed } from 'vue'
 
 interface Props {
   logoColor?: string
+  isHidden?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  logoColor: '#374151'
+  logoColor: '#374151',
+  isHidden: false
 })
 
 defineEmits<{
@@ -63,14 +67,28 @@ const textColor = computed(() => props.logoColor)
   width: 140px;
   height: 140px;
   cursor: pointer;
-  transition: transform 0.3s ease-out;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease,
+    transform 0.3s ease-out;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.floating-contact-button.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(1rem) scale(0.9);
+  visibility: hidden;
+}
+
 .floating-contact-button:hover {
   transform: scale(1.2);
+}
+
+.floating-contact-button.is-hidden:hover {
+  transform: translateY(1rem) scale(0.9);
 }
 
 .rotating-text {
