@@ -18,8 +18,7 @@
 
 @font-face {
     font-family: 'Cocogoose Classic';
-    src: url('fonts/CocogooseClassic-Regular.woff2') format('woff2'),
-    url('fonts/CocogooseClassic-Regular.woff') format('woff');
+    src: url('fonts/CocogooseClassic-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -27,8 +26,7 @@
 
 @font-face {
     font-family: 'Cocogoose Classic';
-    src: url('fonts/CocogooseClassic-Light.woff2') format('woff2'),
-    url('fonts/CocogooseClassic-Light.woff') format('woff');
+    src: url('fonts/CocogooseClassic-Light.woff2') format('woff2');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -36,8 +34,7 @@
 
 @font-face {
     font-family: 'Cocogoose Classic';
-    src: url('fonts/CocogooseClassic-Bold.woff2') format('woff2'),
-    url('fonts/CocogooseClassic-Bold.woff') format('woff');
+    src: url('fonts/CocogooseClassic-Bold.woff2') format('woff2');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -45,7 +42,7 @@
 
 
 html, body {
-    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     @apply bg-stone-50 dark:bg-dark-bg text-slate-900 dark:text-dark-text-primary transition-colors duration-300;
 }
 
@@ -99,6 +96,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .card {
     @apply relative flex flex-col gap-8 break-inside-avoid mb-8 pb-8;
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 780px;
 }
 
 .card:nth-child(4) {
@@ -137,6 +136,11 @@ h1, h2, h3, h4, h5, h6 {
     @apply h-full w-full object-cover;
     min-height: 39vh;
     filter: saturate(0.85) contrast(1.05);
+}
+
+.showcase-media img,
+.card img {
+    background-color: oklch(92% 0.01 250);
 }
 
 .showcase-media img:nth-child(1) {

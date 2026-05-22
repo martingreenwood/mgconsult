@@ -9,6 +9,7 @@ import ScrollToTop from '@/components/ScrollToTop.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import ThemeToggle from '@/components/ThemeToggle.vue'
 import { useTheme } from '@/composables/useTheme'
+import { openTallyMessage } from '@/utils/tally'
 
 const route = useRoute()
 const { isDark, initTheme } = useTheme()
@@ -197,6 +198,8 @@ const handleOpenContactModal = () => {
 }
 
 watch(isDark, () => {
+  updateLogoColor()
+  updateFloatingContactVisibility()
   requestAnimationFrame(() => {
     updateLogoColor()
     updateFloatingContactVisibility()
@@ -206,6 +209,8 @@ watch(isDark, () => {
 watch(
   () => route.name,
   () => {
+    updateLogoColor()
+    updateFloatingContactVisibility()
     requestAnimationFrame(() => {
       updateLogoColor()
       updateFloatingContactVisibility()
@@ -272,10 +277,7 @@ onUnmounted(() => {
             <button
               class="footer-secondary-link"
               type="button"
-              data-tally-open="Bz27eR"
-              data-tally-auto-close="0"
-              data-tally-form-events-forwarding="1"
-              data-source="footer-cta"
+              @click="openTallyMessage('footer-cta')"
               aria-label="Send a project message"
             >
               Send a Message
@@ -321,10 +323,7 @@ onUnmounted(() => {
             <button type="button" @click="openModal">Book a consultation</button>
             <button
               type="button"
-              data-tally-open="Bz27eR"
-              data-tally-auto-close="0"
-              data-tally-form-events-forwarding="1"
-              data-source="footer-contact"
+              @click="openTallyMessage('footer-contact')"
             >
               Send a message
             </button>

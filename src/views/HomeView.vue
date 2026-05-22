@@ -4,6 +4,7 @@ import BaseButton from '@/components/BaseButton.vue'
 import RecentProjects from '@/components/RecentProjects.vue'
 import Testimonials from '@/components/Testimonials.vue'
 import FAQ from '@/components/FAQ.vue'
+import { openTallyMessage } from '@/utils/tally'
 
 const activeAccordion = ref<number | null>(0)
 
@@ -37,10 +38,7 @@ const toggleAccordion = (index: number) => {
       <BaseButton
         variant="secondary"
         size="lg"
-        data-tally-open="Bz27eR"
-        data-tally-auto-close="0"
-        data-tally-form-events-forwarding="1"
-        data-source="hero"
+        @click="openTallyMessage('hero')"
         aria-label="Send a project message"
       >
         Send a Message
@@ -50,10 +48,10 @@ const toggleAccordion = (index: number) => {
 
   <section class="showcase-section" aria-labelledby="showcase-heading">
     <div class="showcase-media" aria-hidden="true">
-      <img src="../assets/projects/hoar-cross-hall.jpg" alt="" loading="eager" decoding="async">
-      <img src="../assets/projects/the-elms.jpg" alt="" loading="eager" decoding="async">
-      <img src="../assets/projects/the-vineyard.jpg" alt="" loading="eager" decoding="async">
-      <img src="../assets/projects/villa-hotels.jpg" alt="" loading="eager" decoding="async">
+      <img src="../assets/projects/hoar-cross-hall-card.webp" alt="" width="1200" height="800" loading="lazy" decoding="async">
+      <img src="../assets/projects/the-elms-card.webp" alt="" width="1200" height="799" loading="lazy" decoding="async">
+      <img src="../assets/projects/the-vineyard-card.webp" alt="" width="1200" height="800" loading="lazy" decoding="async">
+      <img src="../assets/projects/villa-hotels-card.webp" alt="" width="1200" height="900" loading="lazy" decoding="async">
     </div>
     <div class="showcase-overlay"></div>
     <div class="showcase-content max-w-6xl mx-auto">
@@ -90,9 +88,9 @@ const toggleAccordion = (index: number) => {
 
       <div class="masonry-container" role="list">
         <div class="card" role="listitem">
-          <img src="../assets/img/api-integration.webp"
+          <img src="../assets/img/api-integration-card.webp"
             alt="Systems integration diagram showing interconnected APIs and services" loading="lazy"
-            decoding="async">
+            decoding="async" width="1200" height="840">
           <div class="flex items-center gap-4">
             <h3 class="text-xl text-shadow-slate-900 dark:text-shadow-slate-100 coco text-slate-900 dark:text-white">
               Systems Integration
@@ -111,7 +109,7 @@ const toggleAccordion = (index: number) => {
 
         <div class="card" role="listitem">
           <img src="../assets/img/data-dashboards.webp" alt="Data dashboard showing analytics and performance metrics"
-            loading="lazy" decoding="async">
+            loading="lazy" decoding="async" width="1305" height="683">
           <div class="flex items-center gap-4">
             <h3 class="text-xl text-shadow-slate-900 dark:text-shadow-slate-100 coco text-slate-900 dark:text-white">
               Data Dashboards &amp; Visualisation
@@ -130,7 +128,7 @@ const toggleAccordion = (index: number) => {
 
         <div class="card" role="listitem">
           <img src="../assets/img/digital-signage.webp" alt="Digital signage displays in a modern venue" loading="lazy"
-            decoding="async">
+            decoding="async" width="1232" height="1200">
           <div class="flex items-center gap-4">
             <h3 class="text-xl text-shadow-slate-900 dark:text-shadow-slate-100 coco text-slate-900 dark:text-white">
               Digital Signage &amp; On-Site Displays
@@ -149,7 +147,7 @@ const toggleAccordion = (index: number) => {
 
         <div class="card" role="listitem">
           <img src="../assets/img/web-app-development.webp"
-            alt="Modern web application interface on laptop and mobile devices" loading="lazy" decoding="async">
+            alt="Modern web application interface on laptop and mobile devices" loading="lazy" decoding="async" width="820" height="460">
           <div class="flex items-center gap-4">
             <h3 class="text-xl text-shadow-slate-900 dark:text-shadow-slate-100 coco text-slate-900 dark:text-white">
               Web &amp; App Development
@@ -168,7 +166,7 @@ const toggleAccordion = (index: number) => {
 
         <div class="card" role="listitem">
           <img src="../assets/img/booking.webp" alt="Booking engine interface showing availability calendar"
-            loading="lazy" decoding="async">
+            loading="lazy" decoding="async" width="1574" height="884">
           <div class="flex items-center gap-4">
             <h3 class="text-xl text-shadow-slate-900 dark:text-shadow-slate-100 coco text-slate-900 dark:text-white">
               Booking Engines &amp; Ticketing
@@ -187,7 +185,7 @@ const toggleAccordion = (index: number) => {
 
         <div class="card" role="listitem">
           <img src="../assets/img/digital.webp"
-            alt="Technical strategy meeting with team reviewing system architecture" loading="lazy" decoding="async">
+            alt="Technical strategy meeting with team reviewing system architecture" loading="lazy" decoding="async" width="740" height="740">
           <div class="flex items-center gap-4">
             <h3 class="text-xl text-shadow-slate-900 dark:text-shadow-slate-100 coco text-slate-900 dark:text-white">
               Technical Strategy &amp; Consulting
@@ -230,10 +228,7 @@ const toggleAccordion = (index: number) => {
         <BaseButton
           variant="secondary"
           size="lg"
-          data-tally-open="Bz27eR"
-          data-tally-auto-close="0"
-          data-tally-form-events-forwarding="1"
-          data-source="cta"
+          @click="openTallyMessage('cta')"
           aria-label="Send a project message"
         >
           Send a Message
@@ -349,27 +344,27 @@ const toggleAccordion = (index: number) => {
           aria-label="Trusted client logos">
           <div class="trust-logo-tile" role="listitem">
             <img src="../assets/trust/be.svg" alt="Barons Eden logo"
-              class="trust-logo h-12 w-auto mx-auto transition-all duration-300" loading="lazy">
+              class="trust-logo h-12 w-auto mx-auto transition-all duration-300" loading="lazy" decoding="async" width="180" height="48">
           </div>
           <div class="trust-logo-tile" role="listitem">
             <img src="../assets/trust/elms.svg" alt="The Elms logo"
-              class="trust-logo h-12 w-auto mx-auto transition-all duration-300" loading="lazy">
+              class="trust-logo h-12 w-auto mx-auto transition-all duration-300" loading="lazy" decoding="async" width="180" height="48">
           </div>
           <div class="trust-logo-tile" role="listitem">
             <img src="../assets/trust/eh.svg" alt="English Heritage logo"
-              class="trust-logo h-12 w-auto mx-auto transition-all duration-300" loading="lazy">
+              class="trust-logo h-12 w-auto mx-auto transition-all duration-300" loading="lazy" decoding="async" width="180" height="48">
           </div>
           <div class="trust-logo-tile" role="listitem">
             <img src="../assets/trust/hch.svg" alt="Hoar Cross Hall logo"
-              class="trust-logo h-12 w-auto mx-auto transition-all duration-300" loading="lazy">
+              class="trust-logo h-12 w-auto mx-auto transition-all duration-300" loading="lazy" decoding="async" width="180" height="48">
           </div>
           <div class="trust-logo-tile" role="listitem">
             <img src="../assets/trust/middle8.svg" alt="Middle8 Hotel logo"
-              class="trust-logo h-16 w-auto mx-auto transition-all duration-300" loading="lazy">
+              class="trust-logo h-16 w-auto mx-auto transition-all duration-300" loading="lazy" decoding="async" width="180" height="64">
           </div>
           <div class="trust-logo-tile" role="listitem">
             <img src="../assets/trust/pob.svg" alt="Palace of Bournemouth logo"
-              class="trust-logo h-16 w-auto mx-auto transition-all duration-300" loading="lazy">
+              class="trust-logo h-16 w-auto mx-auto transition-all duration-300" loading="lazy" decoding="async" width="180" height="64">
           </div>
         </div>
       </div>

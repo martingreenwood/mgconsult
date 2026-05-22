@@ -58,10 +58,7 @@
           <BaseButton
             variant="secondary"
             size="md"
-            data-tally-open="Bz27eR"
-            data-tally-auto-close="0"
-            data-tally-form-events-forwarding="1"
-            data-source="proof"
+            @click="openTallyMessage('proof')"
             aria-label="Send a project message"
           >
             Send a Message
@@ -74,6 +71,7 @@
 
 <script setup lang="ts">
 import BaseButton from '@/components/BaseButton.vue'
+import { openTallyMessage } from '@/utils/tally'
 
 interface ProofPoint {
   context: string

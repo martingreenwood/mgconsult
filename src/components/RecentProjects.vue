@@ -1,17 +1,19 @@
 <script setup lang="ts">
+import hoarCrossHallImage from '@/assets/projects/hoar-cross-hall-card.webp'
+import theElmsImage from '@/assets/projects/the-elms-card.webp'
+import theVineyardImage from '@/assets/projects/the-vineyard-card.webp'
+import villaHotelsImage from '@/assets/projects/villa-hotels-card.webp'
+
 interface Project {
   id: number
   title: string
   client: string
   description: string
   image: string
+  width: number
+  height: number
   tags: string[]
   link?: string
-}
-
-// Helper function to get image URL
-const getImageUrl = (name: string) => {
-  return new URL(`../assets/projects/${name}`, import.meta.url).href
 }
 
 const projects: Project[] = [
@@ -20,7 +22,9 @@ const projects: Project[] = [
     title: "Real-Time Availability Workflow",
     client: "Barons Eden",
     description: "Booking system integration with live availability, customer portal journeys, and operational tools for managing high-value experiences.",
-    image: getImageUrl('hoar-cross-hall.jpg'),
+    image: hoarCrossHallImage,
+    width: 1200,
+    height: 800,
     tags: ["Availability Logic", "Customer Portal", "Real-time Data"]
   },
   {
@@ -28,7 +32,9 @@ const projects: Project[] = [
     title: "CMS & Event Booking Flow",
     client: "The Elms",
     description: "Custom CMS and event booking flow with integrated payments, content workflows, and customer communications for a busy historic venue.",
-    image: getImageUrl('the-elms.jpg'),
+    image: theElmsImage,
+    width: 1200,
+    height: 799,
     tags: ["Event Workflows", "Payment Integration", "CMS"]
   },
   {
@@ -36,7 +42,9 @@ const projects: Project[] = [
     title: "Pricing & Operations Integration",
     client: "Villa Hotels",
     description: "Modern booking engine work connecting dynamic pricing, customer preferences, reporting needs, and back-office platform integration.",
-    image: getImageUrl('villa-hotels.jpg'),
+    image: villaHotelsImage,
+    width: 1200,
+    height: 900,
     tags: ["Dynamic Pricing", "Platform Integration", "Analytics"]
   },
   {
@@ -44,7 +52,9 @@ const projects: Project[] = [
     title: "Group Booking & Commerce Flow",
     client: "The Vineyard",
     description: "Custom booking and commerce flows for group reservations, online sales, and operational management across multiple customer journeys.",
-    image: getImageUrl('the-vineyard.jpg'),
+    image: theVineyardImage,
+    width: 1200,
+    height: 800,
     tags: ["Group Booking", "E-commerce", "Workflow Design"]
   }
 ]
@@ -69,7 +79,14 @@ const projects: Project[] = [
           :key="project.id"
           class="card !pt-0"
         >
-          <img :src="project.image" :alt="project.title" loading="lazy" decoding="async">
+          <img
+            :src="project.image"
+            :alt="project.title"
+            :width="project.width"
+            :height="project.height"
+            loading="lazy"
+            decoding="async"
+          >
           <div class="flex flex-col gap-2">
             <div class="flex items-center gap-4">
               <h3 class="text-xl text-shadow-slate-900 dark:text-shadow-slate-100 coco text-white">
