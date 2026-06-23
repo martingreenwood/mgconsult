@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { mount, flushPromises } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
 import ContactModal from '../modals/ContactModal.vue'
 
@@ -15,6 +15,7 @@ vi.mock('@/components/BaseButton.vue', () => ({
 describe('ContactModal.vue', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    document.querySelectorAll('script[src*="scheduling.choom.app"]').forEach((script) => script.remove())
   })
 
   describe('Visibility toggle', () => {
@@ -89,8 +90,8 @@ describe('ContactModal.vue', () => {
     })
   })
 
-  describe('Booking success status', () => {
-    it('displays Calendly embed when currentStep is booking', async () => {
+  describe('Booking widget', () => {
+    it('displays the Choom booking widget when currentStep is booking', () => {
       const wrapper = mount(ContactModal, {
         props: {
           visible: true,
@@ -98,192 +99,36 @@ describe('ContactModal.vue', () => {
         },
       })
 
-      await flushPromises()
-
-      expect(wrapper.find('iframe[src*="calendly.com"]').exists()).toBe(true)
+      const widget = wrapper.find('#choom-booking-widget')
+      expect(widget.exists()).toBe(true)
+      expect(widget.attributes('data-event-type-uuid')).toBe('b04a60f0-8ec4-4ac8-bb0a-20cfe2379b3e')
       expect(wrapper.find('[role="status"]').exists()).toBe(false)
     })
 
-    it('displays success message when booking is completed', async () => {
+    it('loads the Choom script when modal opens', () => {
       const wrapper = mount(ContactModal, {
         props: {
           visible: true,
           side: 'right',
         },
-        attachTo: document.body,
       })
 
-      await flushPromises()
-
-      // Simulate Calendly booking event
-      const calendlyEvent = {
-        origin: 'https://calendly.com',
-        data: {
-          event: 'calendly.event_scheduled',
-          payload: {
-            event: {
-              event_type: {
-                name: '30 Minute Meeting',
-              },
-              start_time: '2026-01-15T10:00:00Z',
-            },
-            invitee: {
-              name: 'John Doe',
-              email: 'john@example.com',
-            },
-          },
-        },
-      }
-
-      window.dispatchEvent(new MessageEvent('message', calendlyEvent))
-      await flushPromises()
-      await nextTick()
-
-      expect(wrapper.find('[role="status"]').exists()).toBe(true)
-      expect(wrapper.text()).toContain('Consultation Booked!')
-      expect(wrapper.find('iframe[src*="calendly.com"]').exists()).toBe(false)
+      expect(document.querySelector('script[src*="scheduling.choom.app"]')).toBeTruthy()
 
       wrapper.unmount()
     })
 
-    it('displays booking details in success step', async () => {
+    it('keeps the widget hidden until the Choom script has loaded', () => {
       const wrapper = mount(ContactModal, {
         props: {
           visible: true,
           side: 'right',
         },
-        attachTo: document.body,
       })
 
-      await flushPromises()
-
-      // Simulate Calendly booking event with specific details
-      const calendlyEvent = {
-        origin: 'https://calendly.com',
-        data: {
-          event: 'calendly.event_scheduled',
-          payload: {
-            event: {
-              event_type: {
-                name: 'Discovery Call',
-              },
-              start_time: '2026-01-20T14:30:00Z',
-            },
-            invitee: {
-              name: 'Jane Smith',
-              email: 'jane@example.com',
-            },
-          },
-        },
-      }
-
-      window.dispatchEvent(new MessageEvent('message', calendlyEvent))
-      await flushPromises()
-      await nextTick()
-
-      expect(wrapper.text()).toContain('Discovery Call')
-      expect(wrapper.text()).toContain('Jane Smith')
-      expect(wrapper.text()).toContain('jane@example.com')
-
-      wrapper.unmount()
-    })
-
-    it('resets form when "Book Another" is clicked', async () => {
-      const wrapper = mount(ContactModal, {
-        props: {
-          visible: true,
-          side: 'right',
-        },
-        attachTo: document.body,
-      })
-
-      await flushPromises()
-
-      // Trigger success step
-      const calendlyEvent = {
-        origin: 'https://calendly.com',
-        data: {
-          event: 'calendly.event_scheduled',
-          payload: {
-            event: {
-              event_type: { name: 'Meeting' },
-              start_time: '2026-01-15T10:00:00Z',
-            },
-            invitee: {
-              name: 'Test User',
-              email: 'test@example.com',
-            },
-          },
-        },
-      }
-
-      window.dispatchEvent(new MessageEvent('message', calendlyEvent))
-      await flushPromises()
-      await nextTick()
-
-      // Verify we're in success step
-      expect(wrapper.text()).toContain('Consultation Booked!')
-
-      // Click "Book Another" button
-      const bookAnotherButton = wrapper.findAll('button').find((btn) =>
-        btn.text().includes('Book Another')
-      )
-      expect(bookAnotherButton).toBeDefined()
-      await bookAnotherButton?.trigger('click')
-      await nextTick()
-
-      // Should be back to booking step
-      expect(wrapper.find('iframe[src*="calendly.com"]').exists()).toBe(true)
-      expect(wrapper.find('[role="status"]').exists()).toBe(false)
-
-      wrapper.unmount()
-    })
-
-    it('closes modal when "Perfect, Thanks!" is clicked', async () => {
-      const wrapper = mount(ContactModal, {
-        props: {
-          visible: true,
-          side: 'right',
-        },
-        attachTo: document.body,
-      })
-
-      await flushPromises()
-
-      // Trigger success step
-      const calendlyEvent = {
-        origin: 'https://calendly.com',
-        data: {
-          event: 'calendly.event_scheduled',
-          payload: {
-            event: {
-              event_type: { name: 'Meeting' },
-              start_time: '2026-01-15T10:00:00Z',
-            },
-            invitee: {
-              name: 'Test User',
-              email: 'test@example.com',
-            },
-          },
-        },
-      }
-
-      window.dispatchEvent(new MessageEvent('message', calendlyEvent))
-      await flushPromises()
-      await nextTick()
-
-      // Click "Perfect, Thanks!" button
-      const perfectButton = wrapper.findAll('button').find((btn) =>
-        btn.text().includes('Perfect, Thanks!')
-      )
-      expect(perfectButton).toBeDefined()
-      await perfectButton?.trigger('click')
-      await nextTick()
-
-      expect(wrapper.emitted('update:visible')).toBeTruthy()
-      expect(wrapper.emitted('update:visible')?.[0]).toEqual([false])
-
-      wrapper.unmount()
+      expect(wrapper.find('.animate-spin').exists()).toBe(true)
+      expect(wrapper.text()).toContain('Loading call calendar...')
+      expect(wrapper.find('#choom-booking-widget').element.parentElement?.classList.contains('hidden')).toBe(true)
     })
   })
 
@@ -314,7 +159,7 @@ describe('ContactModal.vue', () => {
   })
 
   describe('Loading state', () => {
-    it('shows loading state initially before iframe loads', () => {
+    it('shows loading state initially before script loads', () => {
       const wrapper = mount(ContactModal, {
         props: {
           visible: true,
@@ -323,10 +168,10 @@ describe('ContactModal.vue', () => {
       })
 
       expect(wrapper.find('.animate-spin').exists()).toBe(true)
-      expect(wrapper.text()).toContain('Loading booking calendar...')
+      expect(wrapper.text()).toContain('Loading call calendar...')
     })
 
-    it('hides loading state after iframe loads', async () => {
+    it('hides loading state after Choom script loads', async () => {
       const wrapper = mount(ContactModal, {
         props: {
           visible: true,
@@ -334,12 +179,12 @@ describe('ContactModal.vue', () => {
         },
       })
 
-      const iframe = wrapper.find('iframe')
-      await iframe.trigger('load')
+      const script = document.querySelector<HTMLScriptElement>('script[src*="scheduling.choom.app"]')
+      script?.dispatchEvent(new Event('load'))
       await nextTick()
 
       expect(wrapper.find('.animate-spin').exists()).toBe(false)
-      expect(wrapper.find('.calendly-embed-container.hidden').exists()).toBe(false)
+      expect(wrapper.find('#choom-booking-widget').element.parentElement?.classList.contains('hidden')).toBe(false)
     })
   })
 })

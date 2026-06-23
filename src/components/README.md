@@ -31,7 +31,7 @@ A flexible, reusable button component with multiple variants, sizes, and feature
   :has-arrow="true"
   @click="handleClick"
 >
-  Book a Call
+  Start with a Call
 </BaseButton>
 ```
 

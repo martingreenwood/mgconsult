@@ -15,12 +15,12 @@
       <defs>
         <path
           id="circle"
-          d="M 100, 100 m -70, 0 a 70,70 0 1,1 140,0 a 70,70 0 1,1 -140,0"
+          d="M 100, 100 m -78, 0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0"
         />
       </defs>
       <text class="circular-text" :fill="textColor">
-        <textPath href="#circle" startOffset="0%" textLength="440" lengthAdjust="spacingAndGlyphs">
-          {{ rotatingText }} -  {{ rotatingText }} - &nbsp;
+        <textPath href="#circle" startOffset="0%" textLength="490" lengthAdjust="spacing">
+          {{ rotatingText }} · {{ rotatingText }} · {{ rotatingText }} · {{ rotatingText }} ·
         </textPath>
       </text>
     </svg>
@@ -51,7 +51,7 @@ defineEmits<{
 
 // Text that rotates around the button
 const rotatingText = computed(() => {
-  return 'FREE - 15 MINUTE CONSULTATION'
+  return 'START WITH A CALL'
 })
 
 // Use the same color as the logo
@@ -100,12 +100,13 @@ const textColor = computed(() => props.logoColor)
 }
 
 .circular-text {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   font-family: "Cocogoose Classic", sans-serif;
   text-transform: uppercase;
   text-anchor: start;
+  dominant-baseline: middle;
   transition: fill 0.3s ease;
 }
 
@@ -172,7 +173,8 @@ const textColor = computed(() => props.logoColor)
   }
 
   .circular-text {
-    font-size: 10px;
+    font-size: 9px;
+    letter-spacing: 0.14em;
   }
 }
 </style>

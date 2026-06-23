@@ -23,7 +23,7 @@
 
           <!-- Content Area -->
           <div class="flex-1 px-8 py-8">
-            <h2 id="modal-title" class="sr-only">Book a Consultation Call</h2>
+            <h2 id="modal-title" class="sr-only">Start with a Call</h2>
 
             <!-- Choom Booking Widget -->
             <div v-if="currentStep !== 'success'" class="space-y-4">
@@ -34,7 +34,7 @@
                   <div
                     class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-slate-200 dark:border-dark-border border-t-slate-900 dark:border-t-white mb-4">
                   </div>
-                  <p class="text-slate-600 dark:text-gray-200">Loading booking calendar...</p>
+                  <p class="text-slate-600 dark:text-gray-200">Loading call calendar...</p>
                 </div>
               </div>
 
@@ -57,7 +57,7 @@
 
               <!-- Success Message -->
               <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-3">
-                Consultation Booked!
+                Call Booked
               </h3>
               <p class="text-lg text-slate-600 dark:text-gray-200 mb-6">
                 Your consultation has been successfully scheduled.
@@ -80,7 +80,7 @@
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span>{{ formatCalendlyTime(bookingResult.event.start_time) }}</span>
+                    <span>{{ formatBookingTime(bookingResult.event.start_time) }}</span>
                   </div>
                   <div class="flex items-center">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -253,8 +253,8 @@ const setInitialFocus = async () => {
 
 // Choom or other booking-complete events can be listened for here if the widget exposes them
 
-// Helper function to format Calendly booking time
-const formatCalendlyTime = (timeString: string) => {
+// Helper function to format booking time
+const formatBookingTime = (timeString: string) => {
   if (!timeString) return ''
 
   const date = new Date(timeString)

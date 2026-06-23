@@ -27,7 +27,7 @@
     <section class="space-y-4">
       <h2 class="text-xl font-semibold text-gray-800 coco">With Arrow Animation</h2>
       <div class="flex flex-wrap gap-4">
-        <BaseButton variant="primary" :has-arrow="true">Book a Call</BaseButton>
+        <BaseButton variant="primary" :has-arrow="true">Start with a Call</BaseButton>
         <BaseButton variant="secondary" :has-arrow="true">Learn More</BaseButton>
         <BaseButton variant="outline" :has-arrow="true">Get Started</BaseButton>
         <BaseButton variant="ghost" :has-arrow="true">Ghost Arrow</BaseButton>
@@ -81,13 +81,13 @@
           External Link
         </BaseButton>
         <BaseButton 
-          href="https://calendly.com/example" 
+          href="https://scheduling.choom.app/example" 
           target="_blank" 
           rel="noopener noreferrer"
           variant="secondary"
           :has-arrow="true"
         >
-          Book a Call
+          Start with a Call
         </BaseButton>
       </div>
     </section>

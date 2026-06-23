@@ -22,7 +22,7 @@ describe('FAQ.vue', () => {
       const wrapper = mount(FAQ)
 
       expect(wrapper.find('h2#faq-heading').exists()).toBe(true)
-      expect(wrapper.text()).toContain('Frequently Asked Questions')
+      expect(wrapper.text()).toContain('Frequently asked questions')
     })
 
     it('renders all FAQ items', () => {
@@ -35,9 +35,9 @@ describe('FAQ.vue', () => {
     it('renders FAQ questions correctly', () => {
       const wrapper = mount(FAQ)
 
-      expect(wrapper.text()).toContain('What types of projects do you typically work on?')
-      expect(wrapper.text()).toContain('How do you charge for your services?')
-      expect(wrapper.text()).toContain('How long does a typical project take?')
+      expect(wrapper.text()).toContain('What kind of businesses are the best fit?')
+      expect(wrapper.text()).toContain('How is pricing discussed?')
+      expect(wrapper.text()).toContain('What happens on the first call?')
     })
   })
 
@@ -172,11 +172,11 @@ describe('FAQ.vue', () => {
       const wrapper = mount(FAQ)
 
       // First item is open, should have rotation
-      const firstIcon = wrapper.findAll('.faq-item button span')[1]
+      const firstIcon = wrapper.findAll('.faq-icon')[0]
       expect(firstIcon.classes()).toContain('rotate-180')
 
       // Second item is closed, should not have rotation
-      const secondIcon = wrapper.findAll('.faq-item button')[1].findAll('span')[1]
+      const secondIcon = wrapper.findAll('.faq-icon')[1]
       expect(secondIcon.classes()).not.toContain('rotate-180')
     })
 
@@ -184,7 +184,7 @@ describe('FAQ.vue', () => {
       const wrapper = mount(FAQ)
 
       const secondButton = wrapper.findAll('.faq-item button')[1]
-      const secondIcon = secondButton.findAll('span')[1]
+      const secondIcon = wrapper.findAll('.faq-icon')[1]
 
       // Initially not rotated
       expect(secondIcon.classes()).not.toContain('rotate-180')
@@ -206,11 +206,11 @@ describe('FAQ.vue', () => {
   })
 
   describe('Contact button', () => {
-    it('renders "Book a Call" button', () => {
+    it('renders "Start with a Call" button', () => {
       const wrapper = mount(FAQ)
 
-      expect(wrapper.text()).toContain('Book a Call')
-      expect(wrapper.text()).toContain('Still have questions?')
+      expect(wrapper.text()).toContain('Start with a Call')
+      expect(wrapper.text()).toContain('Not sure where to start?')
     })
 
     it('dispatches custom event when contact button is clicked', async () => {
@@ -225,8 +225,8 @@ describe('FAQ.vue', () => {
       }
       window.addEventListener('open-contact-modal', eventListener)
 
-      // Find and click the "Book a Call" button
-      const button = wrapper.findAll('button').find((btn) => btn.text().includes('Book a Call'))
+      // Find and click the "Start with a Call" button
+      const button = wrapper.findAll('button').find((btn) => btn.text().includes('Start with a Call'))
       expect(button).toBeDefined()
       await button?.trigger('click')
       await nextTick()

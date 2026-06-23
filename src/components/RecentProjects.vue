@@ -19,43 +19,43 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: "Real-Time Availability Workflow",
+    title: "Availability Logic Around a Live Operation",
     client: "Barons Eden",
-    description: "Booking system integration with live availability, customer portal journeys, and operational tools for managing high-value experiences.",
+    description: "Integration work around live availability, customer portal journeys, and operational tools where reliability mattered because the flow was already commercially important.",
     image: hoarCrossHallImage,
     width: 1200,
     height: 800,
-    tags: ["Availability Logic", "Customer Portal", "Real-time Data"]
+    tags: ["Business-critical workflow", "Customer portal", "Real-time data"]
   },
   {
     id: 2,
-    title: "CMS & Event Booking Flow",
+    title: "CMS and Event Booking Without Losing Control",
     client: "The Elms",
-    description: "Custom CMS and event booking flow with integrated payments, content workflows, and customer communications for a busy historic venue.",
+    description: "A custom CMS and event booking flow that joined payments, content workflows, and customer communications for a busy venue with real operational rules.",
     image: theElmsImage,
     width: 1200,
     height: 799,
-    tags: ["Event Workflows", "Payment Integration", "CMS"]
+    tags: ["Event workflows", "Payment integration", "Operational CMS"]
   },
   {
     id: 3,
-    title: "Pricing & Operations Integration",
+    title: "Pricing and Operations Integration",
     client: "Villa Hotels",
-    description: "Modern booking engine work connecting dynamic pricing, customer preferences, reporting needs, and back-office platform integration.",
+    description: "Booking engine work connecting dynamic pricing, customer preferences, reporting needs, and back-office systems without flattening the business logic.",
     image: villaHotelsImage,
     width: 1200,
     height: 900,
-    tags: ["Dynamic Pricing", "Platform Integration", "Analytics"]
+    tags: ["Dynamic pricing", "Platform integration", "Commercial reporting"]
   },
   {
     id: 4,
-    title: "Group Booking & Commerce Flow",
+    title: "Group Booking and Commerce Flow",
     client: "The Vineyard",
-    description: "Custom booking and commerce flows for group reservations, online sales, and operational management across multiple customer journeys.",
+    description: "Customer-facing commerce and booking flows backed by operational management for group reservations, online sales, and multiple customer journeys.",
     image: theVineyardImage,
     width: 1200,
     height: 800,
-    tags: ["Group Booking", "E-commerce", "Workflow Design"]
+    tags: ["Group booking", "E-commerce", "Workflow design"]
   }
 ]
 </script>
@@ -65,11 +65,12 @@ const projects: Project[] = [
     <div class="flex flex-col gap-24 max-w-6xl mx-auto">
       <div class="flex flex-col gap-4">
         <h2 id="projects-heading" class="text-2xl max-w-6xl coco text-white">
-          Recent Projects
+          Proof from systems with consequences
         </h2>
         <p class="text-xl font-light text-gray-100 dark:text-gray-200 max-w-4xl">
-          Selected examples from hospitality, venues, and experience-led work, reframed around the operational problems
-          they solved: availability, payments, content workflows, reporting, and connected customer journeys.
+          Selected examples from hospitality, venues, and experience-led work where the useful part was not just the
+          interface. It was understanding the operational rules, joining the moving pieces, and keeping the business
+          confident while the system changed.
         </p>
       </div>
 
