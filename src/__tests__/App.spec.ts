@@ -47,13 +47,14 @@ describe('App.vue', () => {
     wrapper.unmount()
   })
 
-  it('opens the contact modal from the header contact action', async () => {
+  it('renders contact as a primary navigation route', async () => {
     const wrapper = mountApp()
     await flushPromises()
 
-    await wrapper.find('.site-nav__group--right button').trigger('click')
+    const contactLink = wrapper.find('.site-nav__group--right a[href="/contact"]')
 
-    expect(wrapper.find('[data-test="contact-modal"]').attributes('data-visible')).toBe('true')
+    expect(contactLink.exists()).toBe(true)
+    expect(contactLink.text()).toBe('Contact')
 
     wrapper.unmount()
   })

@@ -44,9 +44,9 @@
     <!-- Resource Hints -->
     <link rel="dns-prefetch" href="https://www.googletagmanager.com">
     <link rel="dns-prefetch" href="https://consent.cookiebot.com">
-
-    <!-- Preload Critical Resources -->
-    <link rel="preload" href="/src/assets/fonts/CocogooseClassic-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- Analytics -->
     <script>
@@ -71,7 +71,17 @@
     </script>
 
     <!-- Cookie Consent -->
-    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="cd4ba38e-5469-4e47-87f0-e0262ac6cde7" data-blockingmode="auto" type="text/javascript"></script>
+    <script>
+      if (!['localhost', '127.0.0.1'].includes(window.location.hostname)) {
+        var cookiebotScript = document.createElement('script');
+        cookiebotScript.id = 'Cookiebot';
+        cookiebotScript.src = 'https://consent.cookiebot.com/uc.js';
+        cookiebotScript.dataset.cbid = 'cd4ba38e-5469-4e47-87f0-e0262ac6cde7';
+        cookiebotScript.dataset.blockingmode = 'auto';
+        cookiebotScript.type = 'text/javascript';
+        document.head.appendChild(cookiebotScript);
+      }
+    </script>
 
     <!-- Structured Data -->
     <script type="application/ld+json">

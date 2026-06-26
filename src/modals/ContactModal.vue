@@ -9,7 +9,7 @@
 
       <!-- Sidebar Content -->
       <div class="relative w-full sm:max-w-lg h-screen z-10 flex flex-col">
-        <div class="sidebar-panel bg-white dark:bg-dark-surface h-full shadow-2xl flex flex-col overflow-y-auto">
+        <div class="sidebar-panel bg-[var(--ink)] dark:bg-dark-surface h-full shadow-2xl flex flex-col overflow-y-auto">
           <!-- Close Button -->
           <button ref="closeButtonRef"
             class="absolute top-6 w-10 h-10 rounded-full bg-slate-100 dark:bg-dark-elevated hover:bg-slate-200 dark:hover:bg-dark-border flex items-center justify-center text-slate-600 dark:text-gray-200 hover:text-slate-900 dark:hover:text-white transition-all duration-200 z-10"

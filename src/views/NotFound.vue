@@ -89,8 +89,7 @@ const openContact = () => {
 </script>
 
 <style scoped>
-/* Ensure the coco font is used for headings */
 .coco {
-  font-family: "Cocogoose Classic", Impact, "Arial Black", sans-serif;
+  font-family: var(--font-display);
 }
 </style>

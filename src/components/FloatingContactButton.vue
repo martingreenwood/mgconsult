@@ -103,7 +103,7 @@ const textColor = computed(() => props.logoColor)
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.16em;
-  font-family: "Cocogoose Classic", sans-serif;
+  font-family: var(--font-display);
   text-transform: uppercase;
   text-anchor: start;
   dominant-baseline: middle;

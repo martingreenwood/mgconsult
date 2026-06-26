@@ -3,14 +3,18 @@ import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
 import FAQ from '../components/FAQ.vue'
 
-// Mock BaseButton component
-vi.mock('@/components/BaseButton.vue', () => ({
-  default: {
-    name: 'BaseButton',
-    template: '<button @click="$emit(\'click\')"><slot /></button>',
-    emits: ['click'],
+const mountFAQ = (options: Parameters<typeof mount>[1] = {}) => mount(FAQ, {
+  ...options,
+  global: {
+    ...options.global,
+    directives: {
+      ...options.global?.directives,
+      reveal: {
+        mounted: () => undefined,
+      },
+    },
   },
-}))
+})
 
 describe('FAQ.vue', () => {
   beforeEach(() => {
@@ -19,21 +23,22 @@ describe('FAQ.vue', () => {
 
   describe('FAQ rendering', () => {
     it('renders the FAQ section correctly', () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
       expect(wrapper.find('h2#faq-heading').exists()).toBe(true)
-      expect(wrapper.text()).toContain('Frequently asked questions')
+      expect(wrapper.text()).toContain('FAQs')
+      expect(wrapper.text()).toContain('Quick answers')
     })
 
     it('renders all FAQ items', () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
       const faqItems = wrapper.findAll('.faq-item')
       expect(faqItems.length).toBeGreaterThan(0)
     })
 
     it('renders FAQ questions correctly', () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
       expect(wrapper.text()).toContain('What kind of businesses are the best fit?')
       expect(wrapper.text()).toContain('How is pricing discussed?')
@@ -43,14 +48,14 @@ describe('FAQ.vue', () => {
 
   describe('FAQ toggle functionality', () => {
     it('first FAQ item is open by default', () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
       const firstFaqAnswer = wrapper.findAll('.faq-answer')[0]
       expect(firstFaqAnswer.classes()).toContain('is-open')
     })
 
     it('toggles FAQ item open state correctly on button click', async () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
       // First item should be open
       let firstAnswer = wrapper.findAll('.faq-answer')[0]
@@ -67,7 +72,7 @@ describe('FAQ.vue', () => {
     })
 
     it('opens a closed FAQ item when its button is clicked', async () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
       // Second item should be closed initially
       let secondAnswer = wrapper.findAll('.faq-answer')[1]
@@ -84,7 +89,7 @@ describe('FAQ.vue', () => {
     })
 
     it('closes currently open FAQ item and opens a new one', async () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
       // First item is open by default
       let firstAnswer = wrapper.findAll('.faq-answer')[0]
@@ -105,7 +110,7 @@ describe('FAQ.vue', () => {
     })
 
     it('toggles the same FAQ item closed when clicked twice', async () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
       // Second item should be closed
       let secondAnswer = wrapper.findAll('.faq-answer')[1]
@@ -130,7 +135,7 @@ describe('FAQ.vue', () => {
 
   describe('FAQ accessibility', () => {
     it('sets correct aria-expanded attribute based on open state', async () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
       const firstButton = wrapper.findAll('.faq-item button')[0]
       const secondButton = wrapper.findAll('.faq-item button')[1]
@@ -148,7 +153,7 @@ describe('FAQ.vue', () => {
     })
 
     it('sets correct aria-controls and aria-labelledby attributes', () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
       const firstButton = wrapper.findAll('.faq-item button')[0]
       const firstAnswer = wrapper.findAll('.faq-answer')[0]
@@ -160,7 +165,7 @@ describe('FAQ.vue', () => {
     })
 
     it('has proper role attributes for list structure', () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
       expect(wrapper.find('[role="list"]').exists()).toBe(true)
       expect(wrapper.findAll('[role="listitem"]').length).toBeGreaterThan(0)
@@ -169,19 +174,17 @@ describe('FAQ.vue', () => {
 
   describe('FAQ icon rotation', () => {
     it('rotates chevron icon when FAQ is open', async () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
-      // First item is open, should have rotation
       const firstIcon = wrapper.findAll('.faq-icon')[0]
       expect(firstIcon.classes()).toContain('rotate-180')
 
-      // Second item is closed, should not have rotation
       const secondIcon = wrapper.findAll('.faq-icon')[1]
       expect(secondIcon.classes()).not.toContain('rotate-180')
     })
 
     it('toggles icon rotation when FAQ item is clicked', async () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
       const secondButton = wrapper.findAll('.faq-item button')[1]
       const secondIcon = wrapper.findAll('.faq-icon')[1]
@@ -206,15 +209,15 @@ describe('FAQ.vue', () => {
   })
 
   describe('Contact button', () => {
-    it('renders "Start with a Call" button', () => {
-      const wrapper = mount(FAQ)
+    it('renders the contact button', () => {
+      const wrapper = mountFAQ()
 
-      expect(wrapper.text()).toContain('Start with a Call')
-      expect(wrapper.text()).toContain('Not sure where to start?')
+      expect(wrapper.text()).toContain('Contact')
+      expect(wrapper.text()).toContain('If you have any other initial questions')
     })
 
     it('dispatches custom event when contact button is clicked', async () => {
-      const wrapper = mount(FAQ, {
+      const wrapper = mountFAQ({
         attachTo: document.body,
       })
 
@@ -225,8 +228,7 @@ describe('FAQ.vue', () => {
       }
       window.addEventListener('open-contact-modal', eventListener)
 
-      // Find and click the "Start with a Call" button
-      const button = wrapper.findAll('button').find((btn) => btn.text().includes('Start with a Call'))
+      const button = wrapper.findAll('button').find((btn) => btn.text().includes('Contact'))
       expect(button).toBeDefined()
       await button?.trigger('click')
       await nextTick()
@@ -241,7 +243,7 @@ describe('FAQ.vue', () => {
 
   describe('FAQ content structure', () => {
     it('displays multiple paragraphs in FAQ answers', () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
       // Find an answer with multiple paragraphs
       const firstAnswer = wrapper.findAll('.faq-answer')[0]
@@ -252,7 +254,7 @@ describe('FAQ.vue', () => {
     })
 
     it('renders FAQ questions in buttons', () => {
-      const wrapper = mount(FAQ)
+      const wrapper = mountFAQ()
 
       const buttons = wrapper.findAll('.faq-item button')
 

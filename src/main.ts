@@ -3,6 +3,8 @@ import { createHead } from '@unhead/vue/client'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
+import { imageReveal } from './directives/imageReveal'
+import { reveal } from './directives/reveal'
 import router from './router'
 
 import './assets/main.css'
@@ -40,5 +42,7 @@ window.addEventListener('unhandledrejection', (event) => {
 app.use(createHead())
 app.use(createPinia())
 app.use(router)
+app.directive('image-reveal', imageReveal)
+app.directive('reveal', reveal)
 
 app.mount('#app')

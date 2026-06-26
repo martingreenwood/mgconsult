@@ -107,6 +107,6 @@ const goHome = () => {
 
 <style scoped>
 .coco {
-  font-family: "Cocogoose Classic", Impact, "Arial Black", sans-serif;
+  font-family: var(--font-display);
 }
 </style>

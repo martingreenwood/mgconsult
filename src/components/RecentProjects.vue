@@ -81,6 +81,7 @@ const projects: Project[] = [
           class="card !pt-0"
         >
           <img
+            v-image-reveal
             :src="project.image"
             :alt="project.title"
             :width="project.width"

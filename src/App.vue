@@ -54,6 +54,8 @@ const activeSeo = computed<RouteSeo>(() => {
   return isRoot ? homeSeo : (route.meta.seo as RouteSeo | undefined) ?? {}
 })
 
+const routeUrl = computed(() => `${baseUrl}${route.path === '/' ? '/' : route.path}`)
+
 useSeoMeta({
   title: computed(() => activeSeo.value.title ?? defaultSeo.title),
   description: computed(() => activeSeo.value.description ?? defaultSeo.description),
@@ -62,7 +64,7 @@ useSeoMeta({
   ogImage: computed(() => activeSeo.value.ogImage ?? defaultSeo.ogImage),
   ogImageWidth: computed(() => activeSeo.value.ogImageWidth ?? defaultSeo.ogImageWidth),
   ogImageHeight: computed(() => activeSeo.value.ogImageHeight ?? defaultSeo.ogImageHeight),
-  ogUrl: computed(() => activeSeo.value.ogUrl ?? `${baseUrl}/`),
+  ogUrl: computed(() => activeSeo.value.ogUrl ?? routeUrl.value),
   ogType: computed(() => activeSeo.value.ogType ?? 'website'),
   ogLocale: computed(() => activeSeo.value.ogLocale ?? defaultSeo.ogLocale),
   ogSiteName: computed(() => activeSeo.value.ogSiteName ?? defaultSeo.siteName),
@@ -77,7 +79,7 @@ useSeoMeta({
 
 useHead({
   link: computed(() => {
-    const canonical = activeSeo.value.canonical ?? `${baseUrl}/`
+    const canonical = activeSeo.value.canonical ?? routeUrl.value
     return canonical ? [{ rel: 'canonical', href: canonical }] : []
   }),
 })
@@ -104,7 +106,7 @@ onUnmounted(() => {
     Skip to main content
   </a>
 
-  <SiteHeader @contact="openModal" />
+  <SiteHeader />
 
   <main id="main-content" class="site-main" :class="{ 'is-muted': showModal }" role="main">
     <router-view />
