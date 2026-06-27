@@ -6,8 +6,8 @@ Allow: /
 Sitemap: https://martingreenwood.com/sitemap.xml
 
 # Disallow crawling of any admin or private areas (if they exist in the future)
-# Disallow: /admin/
-# Disallow: /api/
+Disallow: /admin/
+Disallow: /api/
 
 # Allow all bots to crawl the main site
 Disallow:
