@@ -297,10 +297,19 @@ const router = createRouter({
       return savedPosition
     }
     if (to.hash) {
-      return {
-        el: to.hash,
-        behavior: 'smooth',
-      }
+      // Let the new route paint before Vue Router measures the anchor.
+      // Otherwise its getBoundingClientRect() calls can synchronously flush
+      // the layout invalidated by the route render.
+      return new Promise((resolve) => {
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => {
+            resolve({
+              el: to.hash,
+              behavior: 'smooth',
+            })
+          })
+        })
+      })
     }
     return { top: 0, behavior: 'smooth' }
   },

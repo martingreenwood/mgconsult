@@ -92,7 +92,13 @@ onMounted(async () => {
             class="partner-marquee__logo"
             role="listitem"
           >
-            <img :src="logo.src" :alt="`${logo.name} logo`" loading="lazy" decoding="async">
+            <img
+              :src="logo.src"
+              :alt="`${logo.name} logo`"
+              :loading="logo.name === 'Eden Hall' ? 'eager' : 'lazy'"
+              :fetchpriority="logo.name === 'Eden Hall' ? 'high' : undefined"
+              decoding="async"
+            >
           </div>
         </div>
         <div class="partner-marquee__set" aria-hidden="true">

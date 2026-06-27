@@ -1,5 +1,29 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Google Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/google-sans-latin-variable.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Google Sans";
+  font-style: italic;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/google-sans-latin-variable-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/outfit-latin-variable.woff2") format("woff2");
+}
+
 :root {
   --font-display: "Outfit", sans-serif;
   --font-body: "Google Sans", sans-serif;
@@ -167,6 +191,14 @@ p {
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
   will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .site_logo_banner {
+      padding-block-start: 6vh;
+      left: var(--space-sm);
+      transform: translate(var(--space-sm), calc(var(--banner-offset, 0px) * -1));
+  }
 }
 
 .site_logo_banner.is-hidden {

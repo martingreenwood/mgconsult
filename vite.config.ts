@@ -1,14 +1,58 @@
 import { fileURLToPath, URL } from 'node:url'
 
-import { defineConfig } from 'vite'
+import { defineConfig, type Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+
+const inlineCss = (): Plugin => ({
+  name: 'inline-css',
+  apply: 'build',
+  transformIndexHtml: {
+    order: 'post',
+    handler(html, { bundle }) {
+      if (!bundle) {
+        return html
+      }
+
+      return Object.entries(bundle).reduce((transformedHtml, [fileName, output]) => {
+        if (output.type !== 'asset' || !fileName.endsWith('.css')) {
+          return transformedHtml
+        }
+
+        const css = typeof output.source === 'string'
+          ? output.source
+          : new TextDecoder().decode(output.source)
+        let wasInlined = false
+
+        const nextHtml = transformedHtml.replace(/<link\b[^>]*>/gi, (tag) => {
+          const isStylesheet = /\brel=(["'])stylesheet\1/i.test(tag)
+          const referencesAsset = tag.includes(fileName)
+
+          if (!isStylesheet || !referencesAsset) {
+            return tag
+          }
+
+          wasInlined = true
+
+          return `<style data-vite-css="${fileName}">${css.replace(/<\/style/gi, '<\\/style')}</style>`
+        })
+
+        if (wasInlined) {
+          delete bundle[fileName]
+        }
+
+        return nextHtml
+      }, html)
+    },
+  },
+})
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     vueDevTools(),
+    inlineCss(),
   ],
   resolve: {
     alias: {

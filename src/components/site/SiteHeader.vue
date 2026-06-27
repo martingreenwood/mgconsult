@@ -51,48 +51,80 @@ const closeServices = () => {
   isServicesOpen.value = false
 }
 
-let ticking = false
 const bannerScrollRatio = 0.58
+let bannerHeight = 0
+let fadeStart = 0
+let fadeDistance = 0
+let updateFrame: number | null = null
+let measureFrame: number | null = null
 
 const updateBannerVisibility = () => {
-  const bannerHeight = bannerRef.value?.offsetHeight ?? 0
   const maxOffset = bannerHeight + 24
   const nextOffset = Math.min(window.scrollY * bannerScrollRatio, maxOffset)
 
   bannerOffset.value = nextOffset
 
-  const primaryLogoRect = primaryLogoRef.value?.getBoundingClientRect()
-
-  if (!primaryLogoRect || bannerHeight === 0) {
+  if (bannerHeight === 0 || fadeDistance === 0) {
     primaryLogoOpacity.value = 0
   } else {
     const bannerBottom = bannerHeight - nextOffset
-    const fadeStart = primaryLogoRect.top + primaryLogoRect.height
-    const fadeDistance = primaryLogoRect.height
     const progress = (fadeStart - bannerBottom) / fadeDistance
 
     primaryLogoOpacity.value = Math.min(Math.max(progress, 0), 1)
   }
 
-  ticking = false
+  updateFrame = null
+}
+
+const measureHeader = () => {
+  measureFrame = null
+
+  const nextBannerHeight = bannerRef.value?.offsetHeight ?? 0
+  const primaryLogoRect = primaryLogoRef.value?.getBoundingClientRect()
+
+  bannerHeight = nextBannerHeight
+  fadeStart = primaryLogoRect ? primaryLogoRect.top + primaryLogoRect.height : 0
+  fadeDistance = primaryLogoRect?.height ?? 0
+
+  updateBannerVisibility()
+}
+
+const scheduleMeasurement = () => {
+  if (measureFrame !== null) {
+    window.cancelAnimationFrame(measureFrame)
+  }
+
+  measureFrame = window.requestAnimationFrame(measureHeader)
 }
 
 const handleScroll = () => {
-  if (ticking) return
+  if (updateFrame !== null) return
 
-  window.requestAnimationFrame(updateBannerVisibility)
-  ticking = true
+  updateFrame = window.requestAnimationFrame(updateBannerVisibility)
 }
 
 onMounted(() => {
-  updateBannerVisibility()
+  // Measure after the initial Vue render has painted so geometry reads do not
+  // force the browser to synchronously flush pending styles.
+  measureFrame = window.requestAnimationFrame(() => {
+    measureFrame = window.requestAnimationFrame(measureHeader)
+  })
+
   window.addEventListener('scroll', handleScroll, { passive: true })
-  window.addEventListener('resize', handleScroll)
+  window.addEventListener('resize', scheduleMeasurement)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
-  window.removeEventListener('resize', handleScroll)
+  window.removeEventListener('resize', scheduleMeasurement)
+
+  if (updateFrame !== null) {
+    window.cancelAnimationFrame(updateFrame)
+  }
+
+  if (measureFrame !== null) {
+    window.cancelAnimationFrame(measureFrame)
+  }
 })
 </script>
 

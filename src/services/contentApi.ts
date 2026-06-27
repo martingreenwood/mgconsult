@@ -113,8 +113,17 @@ const assetUrl = (asset?: StatamicAsset): string | undefined => {
   return toAbsoluteUrl(asset.url ?? asset.permalink ?? asset.path ?? asset.src) ?? assetUrl(asset.data)
 }
 
+const versionedAssetUrl = (url: string | undefined, updatedAt?: string) => {
+  if (!url || !updatedAt) return url
+
+  const version = Date.parse(updatedAt)
+  if (Number.isNaN(version)) return url
+
+  return `${url}${url.includes('?') ? '&' : '?'}v=${version}`
+}
+
 const imageUrl = (entry: StatamicEntry) => {
-  return (
+  const url = (
     assetUrl(entry.feature_image)
     ?? assetUrl(entry.feature_iamge)
     ?? assetUrl(entry.featured_image)
@@ -122,6 +131,8 @@ const imageUrl = (entry: StatamicEntry) => {
     ?? assetUrl(entry.hero_image)
     ?? assetUrl(entry.image)
   )
+
+  return versionedAssetUrl(url, entry.updated_at)
 }
 
 const formatDate = (value?: string) => {
