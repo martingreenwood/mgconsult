@@ -4,6 +4,7 @@ import { services } from '@/content/services'
 
 defineEmits<{
   contact: []
+  analyticsSettings: []
 }>()
 
 const currentYear = new Date().getFullYear()
@@ -55,6 +56,9 @@ const currentYear = new Date().getFullYear()
 
       <div class="site-footer__bottom">
         <p>&copy; 2010-{{ currentYear }} Martin Greenwood. Independent digital consultant. Trading through Neurospicy Studio Ltd.</p>
+        <button type="button" @click="$emit('analyticsSettings')">
+          Analytics settings
+        </button>
       </div>
     </div>
   </footer>

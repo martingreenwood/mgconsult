@@ -41,45 +41,7 @@
     <meta name="apple-mobile-web-app-title" content="Martin Greenwood">
     <link rel="manifest" href="/site.webmanifest">
 
-    <!-- Resource Hints -->
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <link rel="dns-prefetch" href="https://consent.cookiebot.com">
     <link rel="preload" href="/src/assets/trust/eh.svg" as="image" type="image/svg+xml" fetchpriority="high">
-
-    <!-- Analytics -->
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      window.addEventListener('load', function () {
-        var loadAnalytics = function () {
-          var script = document.createElement('script');
-          script.async = true;
-          script.src = 'https://www.googletagmanager.com/gtag/js?id=G-X5LPRZB8P4';
-          document.head.appendChild(script);
-          gtag('js', new Date());
-          gtag('config', 'G-X5LPRZB8P4');
-        };
-
-        if ('requestIdleCallback' in window) {
-          window.requestIdleCallback(loadAnalytics, { timeout: 2500 });
-        } else {
-          window.setTimeout(loadAnalytics, 1500);
-        }
-      }, { once: true });
-    </script>
-
-    <!-- Cookie Consent -->
-    <script>
-      if (!['localhost', '127.0.0.1'].includes(window.location.hostname)) {
-        var cookiebotScript = document.createElement('script');
-        cookiebotScript.id = 'Cookiebot';
-        cookiebotScript.src = 'https://consent.cookiebot.com/uc.js';
-        cookiebotScript.dataset.cbid = 'cd4ba38e-5469-4e47-87f0-e0262ac6cde7';
-        cookiebotScript.dataset.blockingmode = 'auto';
-        cookiebotScript.type = 'text/javascript';
-        document.head.appendChild(cookiebotScript);
-      }
-    </script>
 
     <!-- Structured Data -->
     <script type="application/ld+json">

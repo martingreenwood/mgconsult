@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { useSeoMeta, useHead } from '@unhead/vue'
 import { baseUrl, defaultSeo } from '@/config/seo'
 import ContactModal from '@/modals/ContactModal.vue'
+import AnalyticsConsent from '@/components/AnalyticsConsent.vue'
 import SiteFooter from '@/components/site/SiteFooter.vue'
 import SiteHeader from '@/components/site/SiteHeader.vue'
 
@@ -92,6 +93,10 @@ const handleOpenContactModal = () => {
   openModal()
 }
 
+const openAnalyticsSettings = () => {
+  window.dispatchEvent(new CustomEvent('open-analytics-settings'))
+}
+
 onMounted(() => {
   window.addEventListener('open-contact-modal', handleOpenContactModal)
 })
@@ -112,6 +117,7 @@ onUnmounted(() => {
     <router-view />
   </main>
 
-  <SiteFooter @contact="openModal" />
+  <SiteFooter @contact="openModal" @analytics-settings="openAnalyticsSettings" />
   <ContactModal v-model:visible="showModal" side="right" />
+  <AnalyticsConsent />
 </template>

@@ -6,8 +6,11 @@ import App from './App.vue'
 import { imageReveal } from './directives/imageReveal'
 import { reveal } from './directives/reveal'
 import router from './router'
+import { initialiseAnalyticsConsent } from './services/analyticsConsent'
 
 import './assets/main.css'
+
+initialiseAnalyticsConsent()
 
 const app = createApp(App)
 

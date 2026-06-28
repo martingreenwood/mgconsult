@@ -2322,6 +2322,21 @@ p {
   transform: translateY(-1px);
 }
 
+.site-footer__bottom button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.site-footer__bottom button:hover {
+  color: var(--primary);
+}
+
 .site-footer__bottom {
   display: flex;
   flex-wrap: wrap;
