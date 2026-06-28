@@ -1,0 +1,25 @@
+# Martin Greenwood
+
+Martin Greenwood is an independent senior technical partner helping businesses improve websites, CMS platforms, integrations, booking journeys, internal tools, and operational software.
+
+## Primary pages
+
+- [Home](https://martingreenwood.com/)
+- [Services](https://martingreenwood.com/#services)
+- [Projects](https://martingreenwood.com/projects)
+- [Insights](https://martingreenwood.com/insights)
+- [About Martin](https://martingreenwood.com/about)
+- [Contact](https://martingreenwood.com/contact)
+
+## Services
+
+- [Digital consultancy](https://martingreenwood.com/service/digital-consultancy)
+- [Websites and CMS](https://martingreenwood.com/service/websites-and-cms)
+- [Systems and integrations](https://martingreenwood.com/service/systems-and-integrations)
+
+## Site information
+
+- Language: British English
+- Primary market: United Kingdom
+- Topics: PHP, Laravel, Vue, Statamic, CMS architecture, API integration, booking systems, dashboards, internal tools, and technical consultancy
+- Contact enquiries should use the website contact page

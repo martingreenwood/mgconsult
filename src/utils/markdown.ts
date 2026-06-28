@@ -23,10 +23,17 @@ const absoluteAssetUrl = (value: string) => {
 }
 
 const htmlWithAbsoluteAssets = (value: string) => {
-  return value.replace(
+  const absoluteAssets = value.replace(
     /\ssrc=(["'])(\/assets\/[^"']+|assets\/[^"']+)\1/g,
     (_match, quote: string, url: string) => ` src=${quote}${absoluteAssetUrl(url)}${quote}`,
   )
+
+  return absoluteAssets.replace(/<img\b([^>]*)>/gi, (_match, attributes: string) => {
+    const width = /\bwidth\s*=/i.test(attributes) ? '' : ' width="1600"'
+    const height = /\bheight\s*=/i.test(attributes) ? '' : ' height="900"'
+
+    return `<img${width}${height}${attributes}>`
+  })
 }
 
 const inlineMarkdown = (value: string) => {
@@ -34,7 +41,7 @@ const inlineMarkdown = (value: string) => {
     .replace(
       /!\[([^\]]*)\]\((https?:\/\/[^)\s]+|\/[^)\s]+|assets\/[^)\s]+|[^)\s]+)\)/g,
       (_match, alt: string, url: string) => (
-        `<img src="${escapeHtml(absoluteAssetUrl(url))}" alt="${alt}" loading="lazy" decoding="async">`
+        `<img src="${escapeHtml(absoluteAssetUrl(url))}" alt="${alt}" width="1600" height="900" loading="lazy" decoding="async">`
       ),
     )
     .replace(/`([^`]+)`/g, '<code>$1</code>')

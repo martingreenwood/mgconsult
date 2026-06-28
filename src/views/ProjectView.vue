@@ -123,8 +123,13 @@ watch(slug, loadProject)
           <img
             v-image-reveal
             :src="project.image"
+            :srcset="project.imageSrcset"
+            sizes="(min-width: 1100px) 720px, calc(100vw - 32px)"
             :alt="project.title"
+            :width="project.imageWidth"
+            :height="project.imageHeight"
             loading="eager"
+            fetchpriority="high"
             decoding="async"
           >
         </div>

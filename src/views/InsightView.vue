@@ -107,6 +107,8 @@ watch(slug, loadInsight)
           v-image-reveal
           :src="insight.image"
           :alt="insight.title"
+          :width="insight.imageWidth"
+          :height="insight.imageHeight"
           loading="eager"
           decoding="async"
         >

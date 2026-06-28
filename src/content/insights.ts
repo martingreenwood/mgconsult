@@ -10,6 +10,8 @@ export const fallbackInsights: ContentCard[] = [
     intro: 'A practical note on content architecture, editorial control and avoiding unnecessary complexity.',
     url: '/insights/headless-content',
     image: dashboardImage,
+    imageWidth: 1305,
+    imageHeight: 683,
     eyebrow: 'Content systems',
   },
   {
@@ -18,6 +20,8 @@ export const fallbackInsights: ContentCard[] = [
     intro: 'Availability, entitlement, payment and operational rules need more care than the UI suggests.',
     url: '/insights/booking-flows',
     image: bookingImage,
+    imageWidth: 1574,
+    imageHeight: 884,
     eyebrow: 'Booking logic',
   },
   {
@@ -26,6 +30,8 @@ export const fallbackInsights: ContentCard[] = [
     intro: 'Why integration work should prioritise observability, recovery and clear ownership.',
     url: '/insights/api-glue',
     image: integrationImage,
+    imageWidth: 1200,
+    imageHeight: 840,
     eyebrow: 'Integrations',
   },
 ]

@@ -76,12 +76,11 @@ const emitContact = () => {
         </button>
       </div>
 
-      <div class="faq-list" role="list">
-        <article
+      <ul class="faq-list">
+        <li
           v-for="(faq, index) in faqs"
           :key="faq.question"
           class="faq-item"
-          role="listitem"
           :class="{ 'is-open': activeFAQ === index }"
           :style="{ '--reveal-delay': `${index * 60}ms` }"
           v-reveal
@@ -114,8 +113,8 @@ const emitContact = () => {
               </p>
             </div>
           </div>
-        </article>
-      </div>
+        </li>
+      </ul>
     </div>
   </section>
 </template>

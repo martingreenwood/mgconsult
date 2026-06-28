@@ -1,5 +1,5 @@
 import consultancyImage from '@/assets/img/digital.webp'
-import integrationsImage from '@/assets/img/api-integration.webp'
+import integrationsImage from '@/assets/img/api-integration-card.webp'
 import websitesImage from '@/assets/img/web-app-development.webp'
 
 export type Service = {
@@ -8,6 +8,8 @@ export type Service = {
   shortTitle: string
   summary: string
   image: string
+  imageWidth: number
+  imageHeight: number
   intro: string
   tags: string[]
   outcomes: string[]
@@ -21,6 +23,8 @@ export const services: Service[] = [
     title: 'Digital consultancy',
     shortTitle: 'Consultancy',
     image: consultancyImage,
+    imageWidth: 740,
+    imageHeight: 740,
     summary:
       'Shape practical technical direction, prioritise the right work, and turn vague digital pressure into a plan the business can actually use.',
     intro:
@@ -45,6 +49,8 @@ export const services: Service[] = [
     title: 'Websites and CMS',
     shortTitle: 'Websites & CMS',
     image: websitesImage,
+    imageWidth: 820,
+    imageHeight: 460,
     summary:
       'Design and build performant marketing sites, headless content systems and Laravel-backed digital products with clear editorial control.',
     intro:
@@ -69,6 +75,8 @@ export const services: Service[] = [
     title: 'Systems and integrations',
     shortTitle: 'Systems',
     image: integrationsImage,
+    imageWidth: 1200,
+    imageHeight: 840,
     summary:
       'Connect booking engines, CRMs, payment flows, dashboards and internal tools so the operational work feels less handmade.',
     intro:

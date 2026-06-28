@@ -164,11 +164,13 @@ describe('FAQ.vue', () => {
       expect(firstAnswer.attributes('aria-labelledby')).toBe('faq-question-0')
     })
 
-    it('has proper role attributes for list structure', () => {
+    it('uses a native semantic list structure', () => {
       const wrapper = mountFAQ()
 
-      expect(wrapper.find('[role="list"]').exists()).toBe(true)
-      expect(wrapper.findAll('[role="listitem"]').length).toBeGreaterThan(0)
+      expect(wrapper.find('.faq-list').element.tagName).toBe('UL')
+      expect(wrapper.findAll('.faq-item')).toHaveLength(6)
+      expect(wrapper.findAll('.faq-item').every((item) => item.element.tagName === 'LI')).toBe(true)
+      expect(wrapper.find('[role="listitem"]').exists()).toBe(false)
     })
   })
 

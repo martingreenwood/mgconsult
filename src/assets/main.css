@@ -2104,6 +2104,9 @@ p {
 .faq-list {
   display: grid;
   gap: var(--space-xl);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .faq-item {

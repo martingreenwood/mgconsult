@@ -39,7 +39,15 @@ const emitContact = () => {
       </div>
 
       <div class="service-hero__media">
-        <img v-image-reveal :src="service.image" :alt="`${service.title} service illustration`" width="900" height="640" loading="eager" decoding="async">
+        <img
+          v-image-reveal
+          :src="service.image"
+          :alt="`${service.title} service illustration`"
+          :width="service.imageWidth"
+          :height="service.imageHeight"
+          loading="eager"
+          decoding="async"
+        >
       </div>
     </section>
 
@@ -112,6 +120,8 @@ const emitContact = () => {
             class="recent-project-card__image"
             :src="related.image"
             :alt="`${related.title} service illustration`"
+            :width="related.imageWidth"
+            :height="related.imageHeight"
             loading="lazy"
             decoding="async"
           >

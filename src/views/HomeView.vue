@@ -25,13 +25,28 @@ const logoNames: Record<string, string> = {
   pob: 'Pride of Britain',
 }
 
+const logoDimensions: Record<string, { width: number; height: number }> = {
+  be: { width: 1058, height: 256 },
+  eh: { width: 219, height: 99 },
+  elms: { width: 224, height: 46 },
+  future: { width: 107, height: 47 },
+  hch: { width: 366, height: 95 },
+  journey: { width: 96, height: 21 },
+  middle8: { width: 384, height: 444 },
+  newwolsey: { width: 249, height: 149 },
+  pob: { width: 64, height: 64 },
+  'theatre-royal-logo-white': { width: 1181, height: 1240 },
+}
+
 const trustLogos = Object.entries(trustLogoModules)
   .map(([path, src]) => {
     const filename = path.split('/').pop()?.replace('.svg', '') ?? 'Partner'
+    const dimensions = logoDimensions[filename] ?? { width: 240, height: 96 }
 
     return {
       name: logoNames[filename] ?? filename.replace(/[-_]/g, ' '),
       src,
+      ...dimensions,
     }
   })
   .sort((a, b) => a.name.localeCompare(b.name))
@@ -95,6 +110,8 @@ onMounted(async () => {
             <img
               :src="logo.src"
               :alt="`${logo.name} logo`"
+              :width="logo.width"
+              :height="logo.height"
               :loading="logo.name === 'Eden Hall' ? 'eager' : 'lazy'"
               :fetchpriority="logo.name === 'Eden Hall' ? 'high' : undefined"
               decoding="async"
@@ -107,7 +124,14 @@ onMounted(async () => {
             :key="`duplicate-${logo.name}`"
             class="partner-marquee__logo"
           >
-            <img :src="logo.src" alt="" loading="lazy" decoding="async">
+            <img
+              :src="logo.src"
+              alt=""
+              :width="logo.width"
+              :height="logo.height"
+              loading="lazy"
+              decoding="async"
+            >
           </div>
         </div>
       </div>
@@ -134,6 +158,8 @@ onMounted(async () => {
           class="recent-project-card__image"
           :src="service.image"
           :alt="`${service.title} service illustration`"
+          :width="service.imageWidth"
+          :height="service.imageHeight"
           loading="lazy"
           decoding="async"
         >
@@ -176,7 +202,11 @@ onMounted(async () => {
           v-image-reveal
           class="recent-project-card__image"
           :src="project.image"
+          :srcset="project.imageSrcset"
+          sizes="(min-width: 1100px) 739px, (min-width: 760px) 62vw, calc(100vw - 32px)"
           :alt="project.title"
+          :width="project.imageWidth"
+          :height="project.imageHeight"
           loading="lazy"
           decoding="async"
         >
@@ -232,6 +262,8 @@ onMounted(async () => {
           class="recent-project-card__image"
           :src="insight.image"
           :alt="insight.title"
+          :width="insight.imageWidth"
+          :height="insight.imageHeight"
           loading="lazy"
           decoding="async"
         >

@@ -10,6 +10,8 @@ export const fallbackProjects: ContentCard[] = [
     intro: 'Operational improvements around hospitality workflows, booking journeys and internal systems.',
     url: '/projects/hoar-cross-hall',
     image: hoarCrossImage,
+    imageWidth: 1200,
+    imageHeight: 840,
     eyebrow: 'Hospitality systems',
   },
   {
@@ -18,6 +20,8 @@ export const fallbackProjects: ContentCard[] = [
     intro: 'Useful digital infrastructure for experience-led teams with live customer journeys.',
     url: '/projects/the-elms',
     image: theElmsImage,
+    imageWidth: 1200,
+    imageHeight: 840,
     eyebrow: 'Experience-led hotel',
   },
   {
@@ -26,6 +30,8 @@ export const fallbackProjects: ContentCard[] = [
     intro: 'Technical partnership across web, operational tooling and connected commercial workflows.',
     url: '/projects/the-vineyard',
     image: vineyardImage,
+    imageWidth: 1200,
+    imageHeight: 840,
     eyebrow: 'Luxury hospitality',
   },
 ]

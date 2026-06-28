@@ -94,7 +94,11 @@ onMounted(async () => {
               v-if="project.image"
               v-image-reveal
               :src="project.image"
+              :srcset="project.imageSrcset"
+              sizes="(min-width: 1100px) 520px, (min-width: 760px) 46vw, calc(100vw - 32px)"
               :alt="project.title"
+              :width="project.imageWidth"
+              :height="project.imageHeight"
               loading="lazy"
               decoding="async"
             >

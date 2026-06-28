@@ -4,6 +4,9 @@ export type ContentCard = {
   intro: string
   url: string
   image?: string
+  imageSrcset?: string
+  imageWidth?: number
+  imageHeight?: number
   eyebrow?: string
   projectTypes?: string[]
 }
@@ -135,6 +138,24 @@ const imageUrl = (entry: StatamicEntry) => {
   return versionedAssetUrl(url, entry.updated_at)
 }
 
+const responsiveProjectImage = (entry: StatamicEntry) => {
+  if (entry.slug !== 'choom-invoicing') return undefined
+
+  const version = Date.parse(entry.updated_at ?? '')
+  const suffix = Number.isNaN(version) ? '' : `?v=${version}`
+
+  return {
+    src: `/assets/projects/choominv-800.webp${suffix}`,
+    srcset: [
+      `/assets/projects/choominv-480.webp${suffix} 480w`,
+      `/assets/projects/choominv-800.webp${suffix} 800w`,
+      `/assets/projects/choominv-1200.webp${suffix} 1200w`,
+    ].join(', '),
+    width: 800,
+    height: 450,
+  }
+}
+
 const formatDate = (value?: string) => {
   if (!value) return undefined
 
@@ -225,6 +246,8 @@ const normaliseEntry = (
 ): ContentCard => {
   const slug = entry.slug ?? entry.id ?? `${collection}-${index}`
   const projectTypes = collection === 'projects' ? taxonomyLabels(entry.project_type) : []
+  const responsiveImage = collection === 'projects' ? responsiveProjectImage(entry) : undefined
+  const image = responsiveImage?.src ?? imageUrl(entry)
 
   return {
     id: entry.id ?? slug,
@@ -235,7 +258,10 @@ const normaliseEntry = (
         : 'A practical note from the MG journal.'
     ),
     url: entry.url ?? entry.permalink ?? `/${collection}/${slug}`,
-    image: imageUrl(entry),
+    image,
+    imageSrcset: responsiveImage?.srcset,
+    imageWidth: responsiveImage?.width ?? (image ? 1600 : undefined),
+    imageHeight: responsiveImage?.height ?? (image ? 900 : undefined),
     eyebrow: collection === 'projects' ? (projectTypes[0] ?? 'Project') : formatDate(entry.date),
     projectTypes,
   }
