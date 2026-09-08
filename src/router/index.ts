@@ -6,6 +6,7 @@ import HomeView from '@/views/HomeView.vue'
 import InsightView from '@/views/InsightView.vue'
 import InsightsView from '@/views/InsightsView.vue'
 import NotFound from '@/views/NotFound.vue'
+import PrivacyView from '@/views/PrivacyView.vue'
 import ProjectView from '@/views/ProjectView.vue'
 import ProjectsView from '@/views/ProjectsView.vue'
 import ServiceView from '@/views/ServiceView.vue'
@@ -239,6 +240,34 @@ const router = createRouter({
             'Contact Martin Greenwood about websites, CMS platforms, integrations, booking journeys and technical partnership.',
           twitterImage: defaultSeo.ogImage,
           canonical: `${baseUrl}/contact`,
+        },
+      },
+    },
+    {
+      path: '/privacy',
+      name: 'privacy',
+      component: PrivacyView,
+      meta: {
+        seo: {
+          title: 'Privacy Notice | Martin Greenwood',
+          description:
+            'Privacy notice for martingreenwood.com, including contact enquiries, analytics consent, cookies and data rights.',
+          ogTitle: 'Privacy Notice | Martin Greenwood',
+          ogDescription:
+            'Privacy notice for martingreenwood.com, including contact enquiries, analytics consent, cookies and data rights.',
+          ogImage: defaultSeo.ogImage,
+          ogImageWidth: defaultSeo.ogImageWidth,
+          ogImageHeight: defaultSeo.ogImageHeight,
+          ogUrl: `${baseUrl}/privacy`,
+          ogType: 'website',
+          ogLocale: defaultSeo.ogLocale,
+          ogSiteName: defaultSeo.siteName,
+          twitterCard: defaultSeo.twitterCard,
+          twitterTitle: 'Privacy Notice | Martin Greenwood',
+          twitterDescription:
+            'Privacy notice for martingreenwood.com, including contact enquiries, analytics consent, cookies and data rights.',
+          twitterImage: defaultSeo.ogImage,
+          canonical: `${baseUrl}/privacy`,
         },
       },
     },

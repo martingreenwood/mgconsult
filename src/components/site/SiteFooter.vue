@@ -43,11 +43,7 @@ const currentYear = new Date().getFullYear()
           </div>
           <div>
             <p class="site-footer__link-heading">Services</p>
-            <a
-              v-for="service in services"
-              :key="service.slug"
-              :href="`/service/${service.slug}`"
-            >
+            <a v-for="service in services" :key="service.slug" :href="`/service/${service.slug}`">
               {{ service.shortTitle }}
             </a>
           </div>
@@ -55,10 +51,11 @@ const currentYear = new Date().getFullYear()
       </div>
 
       <div class="site-footer__bottom">
-        <p>&copy; 2010-{{ currentYear }} Martin Greenwood. Independent digital consultant. Trading through Neurospicy Studio Ltd.</p>
-        <button type="button" @click="$emit('analyticsSettings')">
-          Analytics settings
-        </button>
+        <p>&copy; 2010-{{ currentYear }} Martin Greenwood. Independent digital consultant.</p>
+        <div class="site-footer__legal">
+          <a href="/privacy">Privacy notice</a>
+          <button type="button" @click="$emit('analyticsSettings')">Analytics settings</button>
+        </div>
       </div>
     </div>
   </footer>

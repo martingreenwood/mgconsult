@@ -57,9 +57,10 @@ const submitForm = async () => {
     responseMessage.value = 'Thanks. Your message has been sent and I’ll reply as soon as I can.'
   } catch (error) {
     submitState.value = 'error'
-    responseMessage.value = error instanceof Error
-      ? error.message
-      : 'Sorry, something went wrong. Please email Martin directly instead.'
+    responseMessage.value =
+      error instanceof Error
+        ? error.message
+        : 'Sorry, something went wrong. Please email Martin directly instead.'
   } finally {
     isSubmitting.value = false
   }
@@ -79,14 +80,12 @@ const submitForm = async () => {
         <p class="eyebrow">Get in touch</p>
         <h2 id="contact-section-title">Let’s talk websites.</h2>
         <p>
-          Send a note if you have a project in mind, a system that needs untangling, or a decision that
-          would benefit from a calmer technical second opinion.
+          Send a note if you have a project in mind, a system that needs untangling, or a decision
+          that would benefit from a calmer technical second opinion.
         </p>
 
         <div class="contact-actions" aria-label="Contact options">
-          <a class="button button--dark" :href="`mailto:${emailAddress}`">
-            Email Martin
-          </a>
+          <a class="button button--dark" :href="`mailto:${emailAddress}`"> Email Martin </a>
           <button class="button button--line" type="button" @click="openBooking">
             Book a call
           </button>
@@ -95,7 +94,9 @@ const submitForm = async () => {
         <dl class="contact-details">
           <div>
             <dt>Email</dt>
-            <dd><a :href="`mailto:${emailAddress}`">{{ emailAddress }}</a></dd>
+            <dd>
+              <a :href="`mailto:${emailAddress}`">{{ emailAddress }}</a>
+            </dd>
           </div>
           <div>
             <dt>Best fit</dt>
@@ -103,7 +104,7 @@ const submitForm = async () => {
           </div>
           <div>
             <dt>Company</dt>
-            <dd>Martin Greenwood, trading through Neurospicy Studio Ltd.</dd>
+            <dd>Martin Greenwood,.</dd>
           </div>
         </dl>
       </aside>
@@ -113,31 +114,36 @@ const submitForm = async () => {
           <p class="eyebrow">Or leave a message</p>
           <h2>Share the useful context.</h2>
           <p>
-            A few details upfront make the first reply much more useful: what needs to change,
-            what already exists, and where the friction is showing up.
+            A few details upfront make the first reply much more useful: what needs to change, what
+            already exists, and where the friction is showing up.
           </p>
         </div>
 
         <form class="contact-form" @submit.prevent="submitForm">
-          <p v-if="responseMessage" class="contact-form-status" :class="`is-${submitState}`" role="status">
+          <p
+            v-if="responseMessage"
+            class="contact-form-status"
+            :class="`is-${submitState}`"
+            role="status"
+          >
             {{ responseMessage }}
           </p>
 
           <div class="contact-form__grid">
             <label>
               <span>Name</span>
-              <input v-model="form.name" name="name" autocomplete="name" required>
+              <input v-model="form.name" name="name" autocomplete="name" required />
             </label>
 
             <label>
               <span>Email</span>
-              <input v-model="form.email" name="email" type="email" autocomplete="email" required>
+              <input v-model="form.email" name="email" type="email" autocomplete="email" required />
             </label>
           </div>
 
           <label>
             <span>Company / organisation</span>
-            <input v-model="form.company" name="company" autocomplete="organization">
+            <input v-model="form.company" name="company" autocomplete="organization" />
           </label>
 
           <label>
@@ -162,7 +168,7 @@ const submitForm = async () => {
 
           <label class="contact-form__honeypot" aria-hidden="true">
             <span>Website</span>
-            <input v-model="form.website" name="website" tabindex="-1" autocomplete="off">
+            <input v-model="form.website" name="website" tabindex="-1" autocomplete="off" />
           </label>
 
           <button class="button button--dark" type="submit" :disabled="isSubmitting">
